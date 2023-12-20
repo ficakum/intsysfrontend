@@ -27,7 +27,7 @@
         "react/react-in-jsx-scope": "off",
         "camelcase": "off",
         "spaced-comment": "error",
-        "quotes": [2, "single", { "avoidEscape": true }],
+        "quotes": [2, "double", { "avoidEscape": true }],
         "no-duplicate-imports": "error",
         "no-explicit-any": "off",
         "react/display-name": "off"
