@@ -1,7 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { getCookie, removeCookie, setCookie } from "typescript-cookie";
 
-import { clearSession, refreshUserAccessToken } from "services/Auth";
+import { clearSession, refreshUserAccessToken } from "../services/Auth";
 import {
   ACCESS_USER_TOKEN_KEY,
   INVALID_ACCESS_TOKEN_DESCRIPTION,
@@ -9,8 +9,8 @@ import {
   INVALID_TOKEN,
   REDIRECT_LOGOUT_KEY,
 } from "../constants/auth";
-import { ROUTES } from "constants/routes";
-import { IAuthUser, ResponseErrorData } from "models";
+import { ROUTES } from "../constants/routes";
+import { IAuthUser, ResponseErrorData } from "../models";
 
 export const Interceptor = (axios: AxiosInstance) => {
   // REQUESTS
