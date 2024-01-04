@@ -1,4 +1,4 @@
-import { HTMLAttributes, useRef, useState } from "react";
+import { ChangeEvent, HTMLAttributes, useRef, useState } from "react";
 import cx from "classnames";
 
 import "./SignUp.scss";
@@ -24,7 +24,58 @@ const SignUp = ({ className }: ISignUpProps) => {
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
 
+  const validateUsername = (username: string) => {
+    const regex = /^[a-zA-Z0-9_-]+$/;
+    const isValidUsername = regex.test(username);
+    setIsUsernameInvalid(!isValidUsername);
+  };
+
+  const validatePassword = (password: string) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+    const isValidPassword = regex.test(password);
+    setIsPasswordInvalid(!isValidPassword);
+  };
+
+  const validateRepeatPassword = (password: string) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+    const isValidPassword = regex.test(password);
+    setIsRepeatPasswordInvalid(!isValidPassword);
+  };
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = regex.test(email);
+    setIsEmailInvalid(isValidEmail);
+  };
+
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newUsername = event.target.value;
+    setUsername(newUsername);
+  };
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newEmail = event.target.value;
+    setEmail(newEmail);
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+  };
+
+  const handleRepeatPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newRepeatPassword = event.target.value;
+    setRepeatPassword(newRepeatPassword);
+  };
+
   const onSignUp = () => {
+    validateUsername(username);
+    validatePassword(password);
+    validateRepeatPassword(repeatPassword);
+    validateEmail(email);
+
     return;
   };
 
@@ -36,6 +87,7 @@ const SignUp = ({ className }: ISignUpProps) => {
         type="text"
         placeholder="Enter username"
         error={isUsernameInvalid}
+        onChange={handleUsernameChange}
       />
       <Input
         className="signup-email"
@@ -43,6 +95,7 @@ const SignUp = ({ className }: ISignUpProps) => {
         type="text"
         placeholder="Enter email"
         error={isEmailInvalid}
+        onChange={handleEmailChange}
       />
       <Input
         className="signup-password"
@@ -50,6 +103,7 @@ const SignUp = ({ className }: ISignUpProps) => {
         type="text"
         placeholder="Enter password"
         error={isPasswordInvalid}
+        onChange={handlePasswordChange}
       />
       <Input
         className="signup-password"
@@ -57,8 +111,11 @@ const SignUp = ({ className }: ISignUpProps) => {
         type="text"
         placeholder="Repeat password"
         error={isRepeatPasswordInvalid}
+        onChange={handleRepeatPasswordChange}
       />
       <Button
+        variant="contained"
+        size="small"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => setIsHovered(true)}

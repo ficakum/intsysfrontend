@@ -1,5 +1,3 @@
-import { AxiosResponse } from "axios";
-
 import { getCookie, removeCookie, setCookie } from "typescript-cookie";
 
 import {
@@ -10,7 +8,7 @@ import {
   REFRESH_TOKEN_KEY,
 } from "../constants/auth";
 import { Api } from "../api";
-import { IAuthUser, IUser } from "../models";
+// import { IAuthUser, IUser } from "../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -28,32 +26,28 @@ export const signInUser = () => {
   return;
 };
 
-export const refreshUserAccessToken = () => {
+export const refreshUserAccessToken = async () => {
   const refreshToken = getCookie(REFRESH_TOKEN_KEY) as string;
 
   const params = new URLSearchParams();
   params.append("refresh_token", refreshToken);
 
-  return Api.post(refreshUserAccessTokenUrl, params, {
+  const response = await Api.post(refreshUserAccessTokenUrl, params, {
     headers: {
       "Content-type": headersContentTypeFormUrlencoded,
     },
-  }).then(async (response: AxiosResponse<IAuthUser>) => {
-    removeCookie(REFRESH_TOKEN_KEY);
-    const newAccessUserToken = response.data.access_token;
-    const newRefreshToken = response.data.refresh_token;
-
-    setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken);
-    setCookie(REFRESH_TOKEN_KEY, newRefreshToken);
-
-    return response.data;
   });
+  removeCookie(REFRESH_TOKEN_KEY);
+  const newAccessUserToken = response.data.access_token;
+  const newRefreshToken = response.data.refresh_token;
+  setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken);
+  setCookie(REFRESH_TOKEN_KEY, newRefreshToken);
+  return await response.data;
 };
 
-export const getLoggedInUser = () => {
-  return Api.get(getLoggedInUserUrl).then((response: AxiosResponse<IUser>) => {
-    return response.data;
-  });
+export const getLoggedInUser = async () => {
+  const response = await Api.get(getLoggedInUserUrl);
+  return response.data;
 };
 
 export const getIsAuthenticated = () => {
