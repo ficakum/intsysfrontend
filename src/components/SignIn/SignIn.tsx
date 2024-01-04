@@ -1,9 +1,8 @@
-import { HTMLAttributes, useRef, useState } from "react";
+import { ChangeEvent, HTMLAttributes, useRef, useState } from "react";
 import cx from "classnames";
 
 import "./SignIn.scss";
-import Input from "../Input";
-import Button from "../Button/Button";
+import { Button, Input } from "@mui/material";
 
 interface ISignInProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -15,8 +14,36 @@ const SignIn = ({ className }: ISignInProps) => {
   const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const validateUsername = (username: string) => {
+    const regex = /^[a-zA-Z0-9_-]+$/;
+    const isValidUsername = regex.test(username);
+    setIsUsernameInvalid(!isValidUsername);
+  };
+
+  const validatePassword = (password: string) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
+    const isValidPassword = regex.test(password);
+    setIsPasswordInvalid(!isValidPassword);
+  };
+
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newUsername = event.target.value;
+    setUsername(newUsername);
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+  };
 
   const onSignIn = () => {
+    validateUsername(username);
+    validatePassword(password);
+
     return;
   };
 
@@ -27,21 +54,22 @@ const SignIn = ({ className }: ISignInProps) => {
         ref={usernameInputRef}
         type="text"
         placeholder="Enter username"
-        hasError={isUsernameInvalid}
+        error={isUsernameInvalid}
+        onChange={handleUsernameChange}
       />
       <Input
         className="signin-password"
         ref={passwordInputRef}
         type="text"
         placeholder="Enter password"
-        hasError={isPasswordInvalid}
+        error={isPasswordInvalid}
+        onChange={handlePasswordChange}
       />
       <Button
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => setIsHovered(true)}
         onTouchEnd={() => setIsHovered(false)}
-        text="Sign in"
         onClick={() => onSignIn()}
         style={{
           padding: "15px 32px 15px 32px",
@@ -50,8 +78,9 @@ const SignIn = ({ className }: ISignInProps) => {
           boxShadow: isHovered
             ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
             : "",
-        }}
-      />
+        }}>
+        Sign in
+      </Button>
     </div>
   );
 };
