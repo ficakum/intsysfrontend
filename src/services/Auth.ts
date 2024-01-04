@@ -13,7 +13,6 @@ import { Api } from "../api";
 import { IAuthUser, IUser } from "../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-// const clientUrl = process.env.REACT_APP_CLIENT_URL;
 
 const headersContentTypeFormUrlencoded = HEADERS_CONTENT_TYPE_FORM_URLENCODED;
 
@@ -24,6 +23,10 @@ const headersContentTypeFormUrlencoded = HEADERS_CONTENT_TYPE_FORM_URLENCODED;
 const refreshUserAccessTokenUrl = `${apiUrl}oauth/token`;
 
 const getLoggedInUserUrl = GET_USERS_API_URL;
+
+export const signInUser = () => {
+  return;
+};
 
 export const refreshUserAccessToken = () => {
   const refreshToken = getCookie(REFRESH_TOKEN_KEY) as string;

@@ -2,8 +2,7 @@ import { HTMLAttributes, useRef, useState } from "react";
 import cx from "classnames";
 
 import "./SignUp.scss";
-import Input from "../Input";
-import Button from "../Button/Button";
+import { Button, Input } from "@mui/material";
 
 interface ISignUpProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -15,9 +14,15 @@ const SignUp = ({ className }: ISignUpProps) => {
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const repeatPasswordInputRef = useRef<HTMLInputElement | null>(null);
   const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false);
-  const [isUEmailInvalid, setIsEmailInvalid] = useState<boolean>(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
+  const [isRepeatPasswordInvalid, setIsRepeatPasswordInvalid] =
+    useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [repeatPassword, setRepeatPassword] = useState<string>("");
 
   const onSignUp = () => {
     return;
@@ -30,35 +35,34 @@ const SignUp = ({ className }: ISignUpProps) => {
         ref={usernameInputRef}
         type="text"
         placeholder="Enter username"
-        hasError={isUsernameInvalid}
+        error={isUsernameInvalid}
       />
       <Input
-        className="signup-username"
+        className="signup-email"
         ref={emailInputRef}
         type="text"
         placeholder="Enter email"
-        hasError={isUEmailInvalid}
+        error={isEmailInvalid}
       />
       <Input
         className="signup-password"
         ref={passwordInputRef}
         type="text"
         placeholder="Enter password"
-        hasError={isPasswordInvalid}
+        error={isPasswordInvalid}
       />
       <Input
         className="signup-password"
         ref={repeatPasswordInputRef}
         type="text"
         placeholder="Repeat password"
-        hasError={isPasswordInvalid}
+        error={isRepeatPasswordInvalid}
       />
       <Button
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => setIsHovered(true)}
         onTouchEnd={() => setIsHovered(false)}
-        text="Sign in"
         onClick={() => onSignUp()}
         style={{
           padding: "15px 32px 15px 32px",
@@ -67,8 +71,9 @@ const SignUp = ({ className }: ISignUpProps) => {
           boxShadow: isHovered
             ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
             : "",
-        }}
-      />
+        }}>
+        Sign up
+      </Button>
     </div>
   );
 };
