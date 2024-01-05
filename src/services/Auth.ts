@@ -6,7 +6,6 @@ import {
   REFRESH_TOKEN_KEY,
 } from "../constants/auth";
 import { Api } from "../api";
-import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
