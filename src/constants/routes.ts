@@ -1,8 +1,8 @@
 export const ROUTES = {
-  AUTHORIZED: {
-    KEY: "authorized-route",
-    TITLE: "Authorized",
-    PATH: "/authorized",
+  Auth: {
+    KEY: "auth-route",
+    TITLE: "Auth",
+    PATH: "/Auth",
   },
   WELCOME: {
     KEY: "welcome-route",

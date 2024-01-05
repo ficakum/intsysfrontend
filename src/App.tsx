@@ -1,20 +1,48 @@
-import React, { useState } from "react";
-import "./App.css";
-import SignIn from "./components/SignIn/SignIn";
-import SignUp from "./components/SignUp/SignUp";
-import { Button } from "@mui/material";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import { ROUTES } from "./constants/routes";
+import Auth from "./pages/Auth";
+import Welcome from "./pages/Welcome";
 
 function App() {
-  const [haveAccount, setHaveAccount] = useState<boolean>(true);
   return (
-    <div className="App">
-      {haveAccount ? <SignIn /> : <SignUp />}{" "}
-      <Button onClick={() => setHaveAccount(!haveAccount)}>
-        {haveAccount
-          ? "Don't have account? Signup"
-          : "ALready have account? Sign in"}
-      </Button>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path={ROUTES.AUTH.PATH} element={<Auth />} />
+
+          <Route path={ROUTES.WELCOME.PATH} element={<Welcome />} />
+
+          {/* <Route
+            path={`${ROUTES.PORTAL.PATH}/*`}
+            element={
+              <TeamsProvider>
+                <Private />
+                <Footer />
+              </TeamsProvider>
+            }>
+            <Route index element={<Portal />} />
+
+            <Route path={ROUTES.FINANCIALS.PATH} element={<Financials />} />
+
+            <Route
+              path={`${ROUTES.PORTAL.PATH}/*`}
+              element={<Navigate to={ROUTES.PORTAL.PATH} replace />}
+            />
+          </Route> */}
+
+          {/* wild route*/}
+          <Route
+            path="*"
+            element={<Navigate to={ROUTES.AUTH.PATH} replace />}
+          />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
