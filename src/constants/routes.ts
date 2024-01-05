@@ -1,5 +1,5 @@
 export const ROUTES = {
-  Auth: {
+  AUTH: {
     KEY: "auth-route",
     TITLE: "Auth",
     PATH: "/Auth",
