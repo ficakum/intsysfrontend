@@ -1,29 +1,85 @@
 import { getCookie, removeCookie, setCookie } from "typescript-cookie";
 
 import {
-  ACCESS_CLIENT_TOKEN_KEY,
   ACCESS_USER_TOKEN_KEY,
-  GET_USERS_API_URL,
   HEADERS_CONTENT_TYPE_FORM_URLENCODED,
   REFRESH_TOKEN_KEY,
 } from "../constants/auth";
 import { Api } from "../api";
-// import { IAuthUser, IUser } from "../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const headersContentTypeFormUrlencoded = HEADERS_CONTENT_TYPE_FORM_URLENCODED;
 
-// const redirectUri = `${clientUrl}authorized`;
+const signinUserUrl = `${apiUrl}v1/authentication/signin`;
+const signupUserUrl = `${apiUrl}v1/authentication/signup`;
+const refreshUserAccessTokenUrl = `${apiUrl}v1/authentication/refresh-token`;
 
-// const loginClientUrl = `${apiUrl}oauth/token`;
-// const loginUserUrl = `${apiUrl}oauth/token`;
-const refreshUserAccessTokenUrl = `${apiUrl}oauth/token`;
+export const getLoggedInUser = async () => {
+  return {
+    email: "",
+    username: "",
+    group: "",
+    id: "",
+  };
+};
 
-const getLoggedInUserUrl = GET_USERS_API_URL;
+export const signInUser = async (username: string, password: string) => {
+  const postData = {
+    username,
+    password,
+  };
 
-export const signInUser = () => {
-  return;
+  const response = await Api.post(signinUserUrl, postData, {
+    headers: {
+      "Content-type": headersContentTypeFormUrlencoded,
+    },
+  });
+
+  const newAccessUserToken = response.data.access_token;
+  const newRefreshToken = response.data.refresh_token;
+  setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken);
+  setCookie(REFRESH_TOKEN_KEY, newRefreshToken);
+};
+
+export const signUpUser = async (
+  username: string,
+  password: string,
+  email: string
+) => {
+  const postData = {
+    username,
+    password,
+    email,
+  };
+
+  const response = await Api.post(signupUserUrl, postData, {
+    headers: {
+      "Content-type": headersContentTypeFormUrlencoded,
+    },
+  });
+
+  const newAccessUserToken = response.data.access_token;
+  const newRefreshToken = response.data.refresh_token;
+  setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken);
+  setCookie(REFRESH_TOKEN_KEY, newRefreshToken);
+
+  return await response.data;
+};
+
+export const resetPassword = async (username: string, newPassword: string) => {
+  const postData = {
+    username,
+    newPassword,
+  };
+
+  const response = await Api.post(signinUserUrl, postData, {
+    headers: {
+      "Content-type": headersContentTypeFormUrlencoded,
+    },
+  });
+
+  return response.status;
 };
 
 export const refreshUserAccessToken = async () => {
@@ -37,17 +93,14 @@ export const refreshUserAccessToken = async () => {
       "Content-type": headersContentTypeFormUrlencoded,
     },
   });
+
   removeCookie(REFRESH_TOKEN_KEY);
   const newAccessUserToken = response.data.access_token;
   const newRefreshToken = response.data.refresh_token;
   setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken);
   setCookie(REFRESH_TOKEN_KEY, newRefreshToken);
-  return await response.data;
-};
 
-export const getLoggedInUser = async () => {
-  const response = await Api.get(getLoggedInUserUrl);
-  return response.data;
+  return await response.data;
 };
 
 export const getIsAuthenticated = () => {
@@ -55,7 +108,6 @@ export const getIsAuthenticated = () => {
 };
 
 export const clearSession = () => {
-  removeCookie(ACCESS_CLIENT_TOKEN_KEY);
   removeCookie(ACCESS_USER_TOKEN_KEY);
   removeCookie(REFRESH_TOKEN_KEY);
 };

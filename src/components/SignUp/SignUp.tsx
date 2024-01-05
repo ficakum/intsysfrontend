@@ -1,14 +1,19 @@
 import { ChangeEvent, HTMLAttributes, useRef, useState } from "react";
 import cx from "classnames";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import "./SignUp.scss";
-import { Button, Input } from "@mui/material";
+
+import { signUpUser } from "../../services/Auth";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface ISignUpProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 const SignUp = ({ className }: ISignUpProps) => {
+  const navigate = useNavigate();
   const usernameInputRef = useRef<HTMLInputElement | null>(null);
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
@@ -23,6 +28,8 @@ const SignUp = ({ className }: ISignUpProps) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [repeatPassword, setRepeatPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
   const validateUsername = (username: string) => {
     const regex = /^[a-zA-Z0-9_-]+$/;
@@ -50,6 +57,14 @@ const SignUp = ({ className }: ISignUpProps) => {
     setIsEmailInvalid(isValidEmail);
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleToggleRepeatPasswordVisibility = () => {
+    setShowRepeatPassword(!showRepeatPassword);
+  };
+
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newUsername = event.target.value;
     setUsername(newUsername);
@@ -70,18 +85,34 @@ const SignUp = ({ className }: ISignUpProps) => {
     setRepeatPassword(newRepeatPassword);
   };
 
-  const onSignUp = () => {
+  const onSignUp = async () => {
     validateUsername(username);
     validatePassword(password);
     validateRepeatPassword(repeatPassword);
     validateEmail(email);
 
-    return;
+    if (
+      isUsernameInvalid ||
+      isEmailInvalid ||
+      isPasswordInvalid ||
+      isRepeatPasswordInvalid
+    ) {
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    await signUpUser(username, password, email);
+
+    navigate("/Welcome");
   };
 
   return (
     <div className={cx("signup", className)}>
-      <Input
+      <TextField
         className="signup-username"
         ref={usernameInputRef}
         type="text"
@@ -89,7 +120,7 @@ const SignUp = ({ className }: ISignUpProps) => {
         error={isUsernameInvalid}
         onChange={handleUsernameChange}
       />
-      <Input
+      <TextField
         className="signup-email"
         ref={emailInputRef}
         type="text"
@@ -97,21 +128,41 @@ const SignUp = ({ className }: ISignUpProps) => {
         error={isEmailInvalid}
         onChange={handleEmailChange}
       />
-      <Input
+      <TextField
         className="signup-password"
         ref={passwordInputRef}
-        type="text"
+        type={showPassword ? "text" : "password"}
         placeholder="Enter password"
         error={isPasswordInvalid}
         onChange={handlePasswordChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
-      <Input
+      <TextField
         className="signup-password"
         ref={repeatPasswordInputRef}
-        type="text"
+        type={showRepeatPassword ? "text" : "password"}
         placeholder="Repeat password"
         error={isRepeatPasswordInvalid}
         onChange={handleRepeatPasswordChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={handleToggleRepeatPasswordVisibility}
+                edge="end">
+                {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
       <Button
         variant="contained"

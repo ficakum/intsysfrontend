@@ -14,25 +14,16 @@ export interface IAuthUser {
 
 export interface IUser {
   email: string;
-  firstName: string;
+  username: string;
   id: string;
-  jerseyNumber: number;
-  lastName: string;
-  phoneNumber: string;
-  photoUrl: string;
-  position: string;
+  group: string;
 }
 
 export const initialUser = {
   email: "",
-  firstName: "",
+  username: "",
+  group: "",
   id: "",
-  jerseyNumber: 0,
-  lastName: "",
-  phoneNumber: "",
-  photoUrl: "",
-  position: "",
-  lastLogin: undefined,
 };
 
 export interface IProps {

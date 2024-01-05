@@ -1,14 +1,18 @@
 import { ChangeEvent, HTMLAttributes, useRef, useState } from "react";
 import cx from "classnames";
+import { useNavigate } from "react-router-dom";
 
 import "./SignIn.scss";
-import { Button, Input } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
+import { signInUser } from "../../services/Auth";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface ISignInProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 const SignIn = ({ className }: ISignInProps) => {
+  const navigate = useNavigate();
   const usernameInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false);
@@ -16,6 +20,7 @@ const SignIn = ({ className }: ISignInProps) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const validateUsername = (username: string) => {
     const regex = /^[a-zA-Z0-9_-]+$/;
@@ -30,6 +35,10 @@ const SignIn = ({ className }: ISignInProps) => {
     setIsPasswordInvalid(!isValidPassword);
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newUsername = event.target.value;
     setUsername(newUsername);
@@ -40,16 +49,22 @@ const SignIn = ({ className }: ISignInProps) => {
     setPassword(newPassword);
   };
 
-  const onSignIn = () => {
+  const onSignIn = async () => {
     validateUsername(username);
     validatePassword(password);
 
-    return;
+    if (isUsernameInvalid || isPasswordInvalid) {
+      return;
+    }
+
+    await signInUser(username, password);
+
+    navigate("/Welcome");
   };
 
   return (
     <div className={cx("signin", className)}>
-      <Input
+      <TextField
         className="signin-username"
         ref={usernameInputRef}
         type="text"
@@ -57,13 +72,22 @@ const SignIn = ({ className }: ISignInProps) => {
         error={isUsernameInvalid}
         onChange={handleUsernameChange}
       />
-      <Input
+      <TextField
         className="signin-password"
         ref={passwordInputRef}
-        type="text"
+        type={showPassword ? "text" : "password"}
         placeholder="Enter password"
         error={isPasswordInvalid}
         onChange={handlePasswordChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
       <Button
         onMouseEnter={() => setIsHovered(true)}
