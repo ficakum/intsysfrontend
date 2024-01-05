@@ -19,7 +19,6 @@ const SignUp = ({ className }: ISignUpProps) => {
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const repeatPasswordInputRef = useRef<HTMLInputElement | null>(null);
   const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false);
-  const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
   const [isRepeatPasswordInvalid, setIsRepeatPasswordInvalid] =
     useState<boolean>(false);
@@ -49,12 +48,6 @@ const SignUp = ({ className }: ISignUpProps) => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsRepeatPasswordInvalid(!isValidPassword);
-  };
-
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValidEmail = regex.test(email);
-    setIsEmailInvalid(isValidEmail);
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -89,21 +82,20 @@ const SignUp = ({ className }: ISignUpProps) => {
     validateUsername(username);
     validatePassword(password);
     validateRepeatPassword(repeatPassword);
-    validateEmail(email);
 
-    if (
-      isUsernameInvalid ||
-      isEmailInvalid ||
-      isPasswordInvalid ||
-      isRepeatPasswordInvalid
-    ) {
-      return;
-    }
+    // if (
+    //   isUsernameInvalid ||
+    //   isEmailInvalid ||
+    //   isPasswordInvalid ||
+    //   isRepeatPasswordInvalid
+    // ) {
+    //   return;
+    // }
 
-    if (password !== repeatPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+    // if (password !== repeatPassword) {
+    //   alert("Passwords do not match");
+    //   return;
+    // }
 
     await signUpUser(username, password, email);
 
@@ -125,7 +117,6 @@ const SignUp = ({ className }: ISignUpProps) => {
         ref={emailInputRef}
         type="text"
         placeholder="Enter email"
-        error={isEmailInvalid}
         onChange={handleEmailChange}
       />
       <TextField

@@ -6,6 +6,7 @@ import {
   REFRESH_TOKEN_KEY,
 } from "../constants/auth";
 import { Api } from "../api";
+import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -26,7 +27,7 @@ export const getLoggedInUser = async () => {
 
 export const signInUser = async (username: string, password: string) => {
   const postData = {
-    username,
+    userName: username,
     password,
   };
 
@@ -48,7 +49,7 @@ export const signUpUser = async (
   email: string
 ) => {
   const postData = {
-    username,
+    userName: username,
     password,
     email,
   };
@@ -69,7 +70,7 @@ export const signUpUser = async (
 
 export const resetPassword = async (username: string, newPassword: string) => {
   const postData = {
-    username,
+    userName: username,
     newPassword,
   };
 
