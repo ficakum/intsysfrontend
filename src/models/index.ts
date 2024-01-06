@@ -26,6 +26,14 @@ export const initialUser = {
   id: "",
 };
 
+export interface IGroup {
+  id: string;
+  groupName: string;
+  currentTrack: string;
+  maxMembers: number;
+  membersNum: number;
+}
+
 export interface IProps {
   children: ReactNode;
 }

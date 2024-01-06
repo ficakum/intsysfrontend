@@ -1,4 +1,4 @@
-import Button from "./SignIn";
+import SignIn from "./SignIn";
 
 export * from "./SignIn";
-export default Button;
+export default SignIn;
