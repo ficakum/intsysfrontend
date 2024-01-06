@@ -16,11 +16,13 @@ export const Interceptor = (axios: AxiosInstance) => {
   axios.interceptors.request.use(
     (config) => {
       const accessUserToken = getCookie(ACCESS_USER_TOKEN_KEY);
+      console.log(accessUserToken);
 
       if (accessUserToken) {
         config.headers.Authorization = `Bearer ${accessUserToken}`;
       }
 
+      console.log(config);
       return config;
     },
     (error) => {
