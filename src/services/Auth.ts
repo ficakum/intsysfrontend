@@ -14,14 +14,11 @@ const headersContentTypeFormUrlencoded = HEADERS_CONTENT_TYPE_FORM_URLENCODED;
 const signinUserUrl = `${apiUrl}v1/authentication/signin`;
 const signupUserUrl = `${apiUrl}v1/authentication/signup`;
 const refreshUserAccessTokenUrl = `${apiUrl}v1/authentication/refresh-token`;
+const getLoggedUserUrl = `${apiUrl}v1/authentication/logged-user`;
 
 export const getLoggedInUser = async () => {
-  return {
-    email: "",
-    username: "",
-    group: "",
-    id: "",
-  };
+  const response = await Api.get(getLoggedUserUrl);
+  return response.data;
 };
 
 export const signInUser = async (username: string, password: string) => {

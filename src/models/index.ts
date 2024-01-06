@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
 export interface ResponseErrorData {
-  error: string;
-  error_description: string;
+  status: number;
+  message: string;
 }
 
 export interface IAuthUser {

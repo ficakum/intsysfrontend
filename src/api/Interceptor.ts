@@ -6,11 +6,10 @@ import {
   ACCESS_USER_TOKEN_KEY,
   INVALID_ACCESS_TOKEN_DESCRIPTION,
   INVALID_REFRESH_TOKEN_DESCRIPTION,
-  INVALID_TOKEN,
   REDIRECT_LOGOUT_KEY,
 } from "../constants/auth";
 import { ROUTES } from "../constants/routes";
-import { IAuthUser, ResponseErrorData } from "../models";
+import { ResponseErrorData } from "../models";
 
 export const Interceptor = (axios: AxiosInstance) => {
   // REQUESTS
@@ -46,42 +45,33 @@ export const Interceptor = (axios: AxiosInstance) => {
   );
 
   const handleUnauthorizedErrors = (responseError: AxiosError) => {
-    const { error, error_description } = responseError.response
+    const { status, message } = responseError.response
       ?.data as ResponseErrorData;
 
-    if (
-      error === INVALID_TOKEN &&
-      error_description.includes(INVALID_ACCESS_TOKEN_DESCRIPTION)
-    ) {
+    if (message.includes(INVALID_ACCESS_TOKEN_DESCRIPTION)) {
       return handleExpiredAccessToken(responseError.config);
     }
 
-    if (
-      error === INVALID_TOKEN &&
-      error_description.includes(INVALID_REFRESH_TOKEN_DESCRIPTION)
-    ) {
+    if (status === 401 && message.includes(INVALID_REFRESH_TOKEN_DESCRIPTION)) {
       return handleExpiredRefreshToken();
     }
   };
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  const handleExpiredAccessToken = (originalRequest: any) => {
+  const handleExpiredAccessToken = async (originalRequest: any) => {
     axios.interceptors.response.eject(responseInterceptor);
 
     removeCookie(ACCESS_USER_TOKEN_KEY);
 
-    return refreshUserAccessToken().then((response: IAuthUser) => {
-      const { access_token } = response;
-
-      originalRequest.headers["Authorization"] = `Bearer ${access_token}`;
-
-      return axios(originalRequest);
-    });
+    const response = await refreshUserAccessToken();
+    const { access_token } = response;
+    originalRequest.headers["Authorization"] = `Bearer ${access_token}`;
+    return await axios(originalRequest);
   };
 
   const handleExpiredRefreshToken = () => {
     clearSession();
     setCookie(REDIRECT_LOGOUT_KEY, true);
-    window.location.assign(ROUTES.WELCOME.PATH);
+    window.location.assign(ROUTES.AUTH.PATH);
   };
 
   return axios;
