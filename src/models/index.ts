@@ -26,6 +26,10 @@ export const initialUser = {
   id: "",
 };
 
+export interface Song {
+  name: string;
+}
+
 export interface IGroup {
   id: string;
   groupName: string;

@@ -17,24 +17,6 @@ function App() {
 
           <Route path={ROUTES.WELCOME.PATH} element={<Welcome />} />
 
-          {/* <Route
-            path={`${ROUTES.PORTAL.PATH}/*`}
-            element={
-              <TeamsProvider>
-                <Private />
-                <Footer />
-              </TeamsProvider>
-            }>
-            <Route index element={<Portal />} />
-
-            <Route path={ROUTES.FINANCIALS.PATH} element={<Financials />} />
-
-            <Route
-              path={`${ROUTES.PORTAL.PATH}/*`}
-              element={<Navigate to={ROUTES.PORTAL.PATH} replace />}
-            />
-          </Route> */}
-
           {/* wild route*/}
           <Route
             path="*"
