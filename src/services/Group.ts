@@ -11,3 +11,11 @@ export const getGroups = async (page: number, limit: number) => {
 
   return response.data;
 };
+
+export const leaveGroup = async (groupId: string) => {
+  await Api.post(`${apiUrl}v1/groups/${groupId}/leave`);
+};
+
+export const joinGroup = async (groupId: string) => {
+  await Api.post(`${apiUrl}v1/groups/${groupId}/join`);
+};
