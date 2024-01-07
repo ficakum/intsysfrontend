@@ -1,17 +1,14 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Song } from "../../models";
 import SongList from "../SongList";
-import { getRecommendations } from "../../services/Track";
-import { Button } from "@mui/material";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface IPlaylistProps {
   groupId: string;
-  setRecommendations: Dispatch<SetStateAction<Song[]>>;
 }
 
-const Playlist: FC<IPlaylistProps> = ({ groupId, setRecommendations }) => {
+const Playlist: FC<IPlaylistProps> = ({ groupId }) => {
   const [playlist, setPlaylist] = useState<Array<Song>>([]);
 
   useEffect(() => {
@@ -24,20 +21,9 @@ const Playlist: FC<IPlaylistProps> = ({ groupId, setRecommendations }) => {
     };
   }, []);
 
-  const onAddSong = () => {
-    getRecommendations(groupId)
-      .then((response: Array<Song>) => {
-        setRecommendations(response);
-      })
-      .catch((error: unknown) => {
-        console.log(error);
-      });
-  };
-
   return (
     <div>
       <SongList songList={playlist} />
-      <Button onClick={onAddSong}>Add Song</Button>
     </div>
   );
 };
