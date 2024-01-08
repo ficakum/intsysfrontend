@@ -1,21 +1,22 @@
 import { FC, useState } from "react";
 import Playlist from "../Playlist";
-import { Song } from "../../models";
+import { IRecommendedSong } from "../../models";
 import Recommendation from "../Recommendation";
 import { getRecommendations } from "../../services/Track";
 import { Button } from "@mui/material";
-import AddSong from "../AddSong";
 
 interface ISongsSectionProps {
   groupId: string;
 }
 
 const SongsSection: FC<ISongsSectionProps> = ({ groupId }) => {
-  const [recommendations, setRecommendations] = useState<Song[]>([]);
+  const [recommendations, setRecommendations] = useState<IRecommendedSong[]>(
+    []
+  );
 
   const onAddSong = () => {
     getRecommendations(groupId)
-      .then((response: Array<Song>) => {
+      .then((response: Array<IRecommendedSong>) => {
         setRecommendations(response);
       })
       .catch((error: unknown) => {
@@ -26,8 +27,11 @@ const SongsSection: FC<ISongsSectionProps> = ({ groupId }) => {
   return (
     <div>
       <Playlist groupId={groupId} />
-      <Recommendation recommendations={recommendations} />
-      <AddSong />
+      <Recommendation
+        groupId={groupId}
+        setRecommendations={setRecommendations}
+        recommendations={recommendations}
+      />
       <Button onClick={onAddSong}>Add Song</Button>
     </div>
   );

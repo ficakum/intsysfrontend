@@ -1,15 +1,41 @@
-import { FC } from "react";
-import { Song } from "../../models";
-import SongList from "../SongList";
+import { Dispatch, FC, SetStateAction } from "react";
+import { IRecommendedSong } from "../../models";
+import { Button } from "@mui/material";
+import { addSong, getRecommendations } from "../../services/Track";
 
 interface IRecommendationsProps {
-  recommendations: Song[];
+  groupId: string;
+  recommendations: IRecommendedSong[];
+  setRecommendations: Dispatch<SetStateAction<IRecommendedSong[]>>;
 }
 
-const Recommendation: FC<IRecommendationsProps> = ({ recommendations }) => {
+const Recommendation: FC<IRecommendationsProps> = ({
+  groupId,
+  recommendations,
+  setRecommendations,
+}) => {
+  const onAddSong = (songId: string) => {
+    addSong({ group: groupId, trackInformation: songId }).then(() => {
+      getRecommendations(groupId)
+        .then((response: Array<IRecommendedSong>) => {
+          setRecommendations(response);
+        })
+        .catch((error: unknown) => {
+          console.log(error);
+        });
+    });
+  };
+
   return (
     <div>
-      <SongList songList={recommendations} />
+      {recommendations.map((song) => (
+        <div key={song.id}>
+          <p>{song.name}</p>
+          <p>{song.author}</p>
+          <p>{song.genre}</p>
+          <Button onClick={() => onAddSong(song.id)}>Add Song</Button>
+        </div>
+      ))}
     </div>
   );
 };

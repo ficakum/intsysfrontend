@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { Song } from "../../models";
-import SongList from "../SongList";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -23,7 +22,9 @@ const Playlist: FC<IPlaylistProps> = ({ groupId }) => {
 
   return (
     <div>
-      <SongList songList={playlist} />
+      {playlist.map((song) => (
+        <p key={song.name}>{song.name}</p>
+      ))}
     </div>
   );
 };

@@ -30,6 +30,17 @@ export interface Song {
   name: string;
 }
 
+export interface IRecommendedSong extends Song {
+  id: string;
+  author: string;
+  genre: string;
+}
+
+export interface ITrack {
+  group: string;
+  trackInformation: string;
+}
+
 export interface IGroup {
   id: string;
   groupName: string;
