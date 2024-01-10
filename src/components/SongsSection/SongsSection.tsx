@@ -27,11 +27,7 @@ const SongsSection: FC<ISongsSectionProps> = ({ groupId }) => {
   return (
     <div>
       <Playlist groupId={groupId} />
-      <Recommendation
-        groupId={groupId}
-        setRecommendations={setRecommendations}
-        recommendations={recommendations}
-      />
+      <Recommendation recommendations={recommendations} />
       <Button onClick={onAddSong}>Add Song</Button>
     </div>
   );
