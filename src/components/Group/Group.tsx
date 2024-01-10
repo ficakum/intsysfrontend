@@ -17,9 +17,8 @@ const Group: FC<IGroupProps> = ({ group }) => {
 
   return (
     <div>
-      <p>{group.groupName}</p>
-      <p>{group.membersNum}</p>
-      <p>{group.maxMembers}</p>
+      <p>Group name: {group.groupName}</p>
+      <p>Member count: {group.membersNum}/{group.maxMembers}</p>
       <Button onClick={onJoinGroup}>Join group</Button>
     </div>
   );
