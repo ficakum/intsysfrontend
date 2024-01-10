@@ -13,10 +13,26 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   const [song, setSong] = useState<{
     songurl: string;
     id: string;
+    infoId: string;
     name: string;
     timeOffset: number;
     externalId: string;
-  }>({ songurl: "", id: "", name: "", timeOffset: 0, externalId: "" });
+    audio_link: string;
+    vocals_link: string;
+    instrumental_link: string;
+    album_cover_link: string;
+  }>({
+    songurl: "",
+    id: "",
+    infoId: "",
+    name: "",
+    timeOffset: 0,
+    externalId: "",
+    audio_link: "",
+    vocals_link: "",
+    instrumental_link: "",
+    album_cover_link: "",
+  });
   const [lyrics, setLyrics] = useState<string>("");
 
   useEffect(() => {

@@ -21,7 +21,7 @@ export const addSong = async (track: ITrack) => {
 };
 
 export const getLyrics = async (trackId: string) => {
-  const response = await Api.get(`${getLyricsURL}?track=${trackId}`);
+  const response = await Api.get(`${getLyricsURL}lyrics/${trackId}`);
 
   return response.data;
 };
