@@ -31,7 +31,8 @@ export interface Song {
 }
 
 export interface IRecommendedSong extends Song {
-  id: string;
+  _id: string;
+  name: string;
   author: string;
   genre: string;
 }
