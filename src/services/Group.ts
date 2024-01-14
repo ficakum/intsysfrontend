@@ -1,4 +1,5 @@
 import { Api } from "../api";
+import { IGroup } from "../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -8,6 +9,12 @@ export const getGroups = async (page: number, limit: number) => {
   const response = await Api.get(
     `${getGroupsUrl}?$page=${page}&$limit=${limit}`
   );
+
+  return response.data;
+};
+
+export const createGroup = async (group: Partial<IGroup>) => {
+  const response = await Api.post(`${getGroupsUrl}`, group);
 
   return response.data;
 };

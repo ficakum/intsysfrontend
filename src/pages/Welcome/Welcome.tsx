@@ -4,6 +4,7 @@ import { IUser, initialUser } from "../../models";
 import { getLoggedInUser } from "../../services/Auth";
 import PlaySong from "../../components/PlaySong";
 import SongsSection from "../../components/SongsSection";
+import CreateGroup from "../../components/CreateGroup";
 
 const Welcome = () => {
   const [user, setUser] = useState<IUser>(initialUser);
@@ -22,7 +23,10 @@ const Welcome = () => {
           <SongsSection groupId={user.group} />
         </div>
       ) : (
-        <Groups />
+        <div>
+          <CreateGroup />
+          <Groups />
+        </div>
       )}
     </div>
   );
