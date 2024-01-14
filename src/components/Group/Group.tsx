@@ -9,7 +9,7 @@ interface IGroupProps {
 
 const Group: FC<IGroupProps> = ({ group }) => {
   const onJoinGroup = () => {
-    joinGroup(group.id)
+    joinGroup(group._id)
       .then(() => alert("Successfully joined the group"))
       .catch((error: unknown) => console.log(error));
     return;
@@ -18,7 +18,9 @@ const Group: FC<IGroupProps> = ({ group }) => {
   return (
     <div>
       <p>Group name: {group.groupName}</p>
-      <p>Member count: {group.membersNum}/{group.maxMembers}</p>
+      <p>
+        Member count: {group.membersNum}/{group.maxMembers}
+      </p>
       <Button onClick={onJoinGroup}>Join group</Button>
     </div>
   );

@@ -42,7 +42,7 @@ export interface ITrack {
 }
 
 export interface IGroup {
-  id: string;
+  _id: string;
   groupName: string;
   currentTrack: string;
   maxMembers: number;

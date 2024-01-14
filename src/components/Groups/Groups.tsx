@@ -45,7 +45,7 @@ const Groups = () => {
   return (
     <div className="groups">
       {groups.map((group) => (
-        <Group key={group.id} group={group} />
+        <Group key={group._id} group={group} />
       ))}
       <Pagination
         count={totalPages}
