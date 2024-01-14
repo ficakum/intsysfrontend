@@ -12,6 +12,8 @@ const Welcome = () => {
   useEffect(() => {
     getLoggedInUser().then((user) => {
       setUser(user);
+
+      return;
     });
   });
 
@@ -19,7 +21,7 @@ const Welcome = () => {
     <div>
       {user.group ? (
         <div>
-          <PlaySong groupId={user.group} songLink="" />
+          <PlaySong groupId={user.group} />
           <SongsSection groupId={user.group} />
         </div>
       ) : (

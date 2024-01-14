@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
+import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
+import { getCookie } from "typescript-cookie";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface IPlaySongProps {
-  songLink: string;
   groupId: string;
 }
 
@@ -36,8 +37,10 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   const [lyrics, setLyrics] = useState<string>("");
 
   useEffect(() => {
+    const accessUserToken = getCookie(ACCESS_USER_TOKEN_KEY);
+
     const eventSource = new EventSource(
-      `${apiUrl}v1/subscribe/groups/${groupId}/track`
+      `${apiUrl}v1/subscribe/groups/${groupId}/track?token=${accessUserToken}`
     );
 
     eventSource.onmessage = (e) => {
