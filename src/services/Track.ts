@@ -27,13 +27,14 @@ export const getTrackInfos = async (
   let limitQuery;
   name ? (nameQuery = `&name=${name}`) : (nameQuery = "");
   author ? (authorQuery = `&author=${author}`) : (authorQuery = "");
-  page ? (pageQuery = `?page=${page}`) : (pageQuery = "?page=1");
-  limit ? (limitQuery = `&limit=${limit}`) : (limitQuery = "&limit=0");
+  page ? (pageQuery = `?$page=${page}`) : (pageQuery = "?page=1");
+  limit ? (limitQuery = `&$limit=${limit}`) : (limitQuery = "&limit=0");
   const response = await Api.get(
     `${getTrackInfosURL}${pageQuery}${limitQuery}${nameQuery}${authorQuery}`
   );
+  console.log(response.data);
 
-  return response.data;
+  return response.data.items;
 };
 
 export const addSong = async (track: ITrack) => {
