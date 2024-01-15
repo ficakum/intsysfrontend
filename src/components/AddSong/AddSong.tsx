@@ -26,7 +26,6 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   const [searchName, setSearchName] = useState<string>("");
   const [searchAuthor, setSearchAuthor] = useState<string>("");
   const [songs, setSongs] = useState<IRecommendedSong[]>([]);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isHoveredAdd, setIsHoveredAdd] = useState<boolean>(false);
 
   const handleSearchNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -91,22 +90,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
         placeholder="Enter username"
         onChange={handleSearchAuthorChange}
       />
-      <Button
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={() => setIsHovered(true)}
-        onTouchEnd={() => setIsHovered(false)}
-        onClick={() => onSearch()}
-        style={{
-          padding: "15px 32px 15px 32px",
-          border: isHovered ? "" : "2px solid #4B4B4B",
-          color: "#4B4B4B",
-          boxShadow: isHovered
-            ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
-            : "",
-        }}>
-        Search
-      </Button>
+      <Button onClick={() => onSearch()}>Search</Button>
       {songs.map((song) => (
         <div key={song._id}>
           <p>{song.name}</p>

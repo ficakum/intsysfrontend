@@ -4,13 +4,13 @@ import { ITrack } from "../models";
 const apiUrl = process.env.REACT_APP_API_URL;
 const aiUrl = process.env.REACT_APP_AI_URL;
 
-const getRecommendationsURL = `${aiUrl}recommendations`;
+const getRecommendationsURL = `${aiUrl}song_recommendations`;
 const getLyricsURL = `${aiUrl}lyrics`;
 const createTrackURL = `${apiUrl}v1/trackUnits/track`;
 const getTrackInfosURL = `${apiUrl}v1/trackUnits/trackInfo`;
 
 export const getRecommendations = async (groupId: string) => {
-  const response = await Api.get(`${getRecommendationsURL}?groupId=${groupId}`);
+  const response = await Api.get(`${getRecommendationsURL}/${groupId}`);
 
   return response.data;
 };
