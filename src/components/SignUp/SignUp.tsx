@@ -8,9 +8,21 @@ import "./SignUp.scss";
 import { signUpUser } from "../../services/Auth";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 interface ISignUpProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
+
+const defaultTheme = createTheme();
 
 const SignUp = ({ className }: ISignUpProps) => {
   const navigate = useNavigate();
@@ -103,77 +115,208 @@ const SignUp = ({ className }: ISignUpProps) => {
   };
 
   return (
-    <div className={cx("signup", className)}>
-      <TextField
-        className="signup-username"
-        ref={usernameInputRef}
-        type="text"
-        placeholder="Enter username"
-        error={isUsernameInvalid}
-        onChange={handleUsernameChange}
-      />
-      <TextField
-        className="signup-email"
-        ref={emailInputRef}
-        type="text"
-        placeholder="Enter email"
-        onChange={handleEmailChange}
-      />
-      <TextField
-        className="signup-password"
-        ref={passwordInputRef}
-        type={showPassword ? "text" : "password"}
-        placeholder="Enter password"
-        error={isPasswordInvalid}
-        onChange={handlePasswordChange}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleTogglePasswordVisibility} edge="end">
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      <TextField
-        className="signup-password"
-        ref={repeatPasswordInputRef}
-        type={showRepeatPassword ? "text" : "password"}
-        placeholder="Repeat password"
-        error={isRepeatPasswordInvalid}
-        onChange={handleRepeatPasswordChange}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={handleToggleRepeatPasswordVisibility}
-                edge="end">
-                {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Button
-        variant="contained"
-        size="small"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={() => setIsHovered(true)}
-        onTouchEnd={() => setIsHovered(false)}
-        onClick={() => onSignUp()}
-        style={{
-          padding: "15px 32px 15px 32px",
-          border: isHovered ? "" : "2px solid #4B4B4B",
-          color: "#4B4B4B",
-          boxShadow: isHovered
-            ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
-            : "",
-        }}>
-        Sign up
-      </Button>
-    </div>
+    // <div className={cx("signup", className)}>
+    //   <TextField
+    //     className="signup-username"
+    //     ref={usernameInputRef}
+    //     type="text"
+    //     placeholder="Enter username"
+    //     error={isUsernameInvalid}
+    //     onChange={handleUsernameChange}
+    //   />
+    //   <TextField
+    //     className="signup-email"
+    //     ref={emailInputRef}
+    //     type="text"
+    //     placeholder="Enter email"
+    //     onChange={handleEmailChange}
+    //   />
+    //   <TextField
+    //     className="signup-password"
+    //     ref={passwordInputRef}
+    //     type={showPassword ? "text" : "password"}
+    //     placeholder="Enter password"
+    //     error={isPasswordInvalid}
+    //     onChange={handlePasswordChange}
+    //     InputProps={{
+    //       endAdornment: (
+    //         <InputAdornment position="end">
+    //           <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+    //             {showPassword ? <Visibility /> : <VisibilityOff />}
+    //           </IconButton>
+    //         </InputAdornment>
+    //       ),
+    //     }}
+    //   />
+    //   <TextField
+    //     className="signup-password"
+    //     ref={repeatPasswordInputRef}
+    //     type={showRepeatPassword ? "text" : "password"}
+    //     placeholder="Repeat password"
+    //     error={isRepeatPasswordInvalid}
+    //     onChange={handleRepeatPasswordChange}
+    //     InputProps={{
+    //       endAdornment: (
+    //         <InputAdornment position="end">
+    //           <IconButton
+    //             onClick={handleToggleRepeatPasswordVisibility}
+    //             edge="end">
+    //             {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
+    //           </IconButton>
+    //         </InputAdornment>
+    //       ),
+    //     }}
+    //   />
+    //   <Button
+    //     variant="contained"
+    //     size="small"
+    //     onMouseEnter={() => setIsHovered(true)}
+    //     onMouseLeave={() => setIsHovered(false)}
+    //     onTouchStart={() => setIsHovered(true)}
+    //     onTouchEnd={() => setIsHovered(false)}
+    //     onClick={() => onSignUp()}
+    //     style={{
+    //       padding: "15px 32px 15px 32px",
+    //       border: isHovered ? "" : "2px solid #4B4B4B",
+    //       color: "#4B4B4B",
+    //       boxShadow: isHovered
+    //         ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
+    //         : "",
+    //     }}>
+    //     Sign up
+    //   </Button>
+    // </div>
+
+
+
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" noValidate /* onSubmit={handleSubmit} */ sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    autoComplete="given-name"
+                    name="firstName"
+                    id="firstName"
+                    label="Username"
+                    required
+                    fullWidth
+                    autoFocus
+
+                    className="signup-username"
+                    ref={usernameInputRef}
+                    type="text"
+                    placeholder="Enter username"
+                    error={isUsernameInvalid}
+                    onChange={handleUsernameChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+
+                    className="signup-email"
+                    ref={emailInputRef}
+                    type="text"
+                    placeholder="Enter email"
+                    onChange={handleEmailChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      id="password"
+                      autoComplete="new-password"
+
+                      className="signup-password"
+                      ref={passwordInputRef}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter password"
+                      error={isPasswordInvalid}
+                      onChange={handlePasswordChange}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        id="password"
+
+                        className="signup-password"
+                        ref={repeatPasswordInputRef}
+                        type={showRepeatPassword ? "text" : "password"}
+                        placeholder="Repeat password"
+                        error={isRepeatPasswordInvalid}
+                        onChange={handleRepeatPasswordChange}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={handleToggleRepeatPasswordVisibility}
+                                edge="end">
+                                {showRepeatPassword ? <Visibility /> : <VisibilityOff />}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                   </Grid>
+             </Grid>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onTouchStart={() => setIsHovered(true)}
+              onTouchEnd={() => setIsHovered(false)}
+              onClick={() => onSignUp()}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+
+
   );
 };
 

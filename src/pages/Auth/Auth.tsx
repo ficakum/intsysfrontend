@@ -8,7 +8,7 @@ const Auth = () => {
   return (
     <div className="auth">
       {haveAccount ? <SignIn /> : <SignUp />}{" "}
-      <Button onClick={() => setHaveAccount(!haveAccount)}>
+      <Button onClick={() => setHaveAccount(!haveAccount)} style={{marginLeft: 565}}>
         {haveAccount
           ? "Don't have account? Signup"
           : "ALready have account? Sign in"}
