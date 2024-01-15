@@ -33,7 +33,7 @@ const Welcome = () => {
   const [user, setUser] = useState<IUser>(initialUser);
 
   useEffect(() => {
-    getLoggedInUser().then((user) => {
+    getLoggedInUser().then((user: IUser) => {
       setUser(user);
 
       return;
@@ -50,7 +50,7 @@ const Welcome = () => {
       ) : (
         <div>
           <CreateGroup />
-          <Groups />
+          <Groups userId={user._id} />
         </div>
       )}
     </div>

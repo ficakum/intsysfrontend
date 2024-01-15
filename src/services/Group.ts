@@ -2,19 +2,19 @@ import { Api } from "../api";
 import { IGroup } from "../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
+const aiUrl = process.env.REACT_APP_AI_URL;
 
-const getGroupsUrl = `${apiUrl}v1/groups/`;
+const getGroupsUrl = `${aiUrl}group_recommendations/`;
+const createGroupsUrl = `${apiUrl}v1/groups/`;
 
-export const getGroups = async (page: number, limit: number) => {
-  const response = await Api.get(
-    `${getGroupsUrl}?$page=${page}&$limit=${limit}`
-  );
+export const getGroups = async (userId: string) => {
+  const response = await Api.get(`${getGroupsUrl}${userId}`);
 
   return response.data;
 };
 
 export const createGroup = async (group: Partial<IGroup>) => {
-  const response = await Api.post(`${getGroupsUrl}`, group);
+  const response = await Api.post(`${createGroupsUrl}`, group);
 
   return response.data;
 };

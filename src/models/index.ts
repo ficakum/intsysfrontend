@@ -15,7 +15,7 @@ export interface IAuthUser {
 export interface IUser {
   email: string;
   username: string;
-  id: string;
+  _id: string;
   group: string;
 }
 
@@ -23,7 +23,7 @@ export const initialUser = {
   email: "",
   username: "",
   group: "",
-  id: "",
+  _id: "",
 };
 
 export interface Song {
