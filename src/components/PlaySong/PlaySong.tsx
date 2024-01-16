@@ -43,10 +43,13 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
       `${apiUrl}v1/subscribe/groups/${groupId}/track?token=${accessUserToken}`
     );
 
-    eventSource.onmessage = (e) => {
-      setSong(e.data);
-      getLyrics(e.data.externalId).then((respone) => setLyrics(respone));
-    };
+    eventSource.addEventListener("CURRENT_TRACK", (e) => {
+      console.log(e.data);
+      setSong(JSON.parse(e.data));
+      // getLyrics(JSON.parse(e.data).externalId).then((respone) =>
+      //   setLyrics(respone)
+      // );
+    });
 
     return () => {
       eventSource.close();

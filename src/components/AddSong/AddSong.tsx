@@ -46,7 +46,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
       .catch((error: unknown) => {
         console.log(error);
       });
-  });
+  }, []);
 
   const onSearch = () => {
     getTrackInfos(1, 10, searchName, searchAuthor)

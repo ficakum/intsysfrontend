@@ -32,7 +32,6 @@ export const getTrackInfos = async (
   const response = await Api.get(
     `${getTrackInfosURL}${pageQuery}${limitQuery}${nameQuery}${authorQuery}`
   );
-  console.log(response.data);
 
   return response.data.items;
 };
@@ -44,7 +43,7 @@ export const addSong = async (track: ITrack) => {
 };
 
 export const getLyrics = async (trackId: string) => {
-  const response = await Api.get(`${getLyricsURL}lyrics/${trackId}`);
+  const response = await Api.get(`${getLyricsURL}/${trackId}`);
 
   return response.data;
 };

@@ -18,7 +18,9 @@ const Playlist: FC<IPlaylistProps> = ({ groupId }) => {
     const eventSource = new EventSource(
       `${apiUrl}v1/subscribe/groups/${groupId}/playlist?token=${accessUserToken}`
     );
-    eventSource.onmessage = (e) => setPlaylist(e.data.playlist);
+    eventSource.addEventListener("PLAYLIST", (e) => {
+      setPlaylist(JSON.parse(e.data).playlist);
+    });
     return () => {
       eventSource.close();
     };
@@ -27,7 +29,7 @@ const Playlist: FC<IPlaylistProps> = ({ groupId }) => {
   return (
     <div>
       {playlist.map((song) => (
-        <p key={song.name}>{song.name}</p>
+        <p key={song.id}>{song.name}</p>
       ))}
     </div>
   );
