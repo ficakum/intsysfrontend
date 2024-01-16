@@ -44,14 +44,14 @@ const CreateGroup = () => {
         className="creategroup-groupname"
         ref={groupNameInputRef}
         type="text"
-        placeholder="Enter username"
+        placeholder="Enter group name"
         onChange={handleGroupNameChange}
       />
       <TextField
         className="creategroup-maxmembers"
         ref={maxMembersInputRef}
-        type="text"
-        placeholder="Enter username"
+        type="number"
+        placeholder="Enter max members"
         onChange={handleMaxMembersChange}
       />
       <Button
