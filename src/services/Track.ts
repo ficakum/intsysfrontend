@@ -45,5 +45,5 @@ export const addSong = async (track: ITrack) => {
 export const getLyrics = async (trackId: string) => {
   const response = await Api.get(`${getLyricsURL}/${trackId}`);
 
-  return response.data;
+  return response.data ? response.data : { id: "", text: "", segments: [] };
 };

@@ -34,7 +34,12 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     instrumental_link: "",
     album_cover_link: "",
   });
-  const [lyrics, setLyrics] = useState<string>("");
+  const [lyrics, setLyrics] = useState<{
+    id: string;
+    text: string;
+    start: number;
+    end: number;
+  }>({ id: "", text: "", start: 0, end: 0 });
 
   useEffect(() => {
     const accessUserToken = getCookie(ACCESS_USER_TOKEN_KEY);
@@ -44,11 +49,33 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     );
 
     eventSource.addEventListener("CURRENT_TRACK", (e) => {
-      console.log(e.data);
       setSong(JSON.parse(e.data));
-      // getLyrics(JSON.parse(e.data).externalId).then((respone) =>
-      //   setLyrics(respone)
-      // );
+      getLyrics(
+        "65a072fb6dff1f21c44e23c8" /* JSON.parse(e.data).externalId */
+      ).then((respone: { segments: [] }) => {
+        console.log(
+          respone.segments.filter(
+            (segment: { start: number; end: number }) =>
+              segment.start < JSON.parse(e.data).timeOffset / 1000 &&
+              segment.end > JSON.parse(e.data).timeOffset / 1000
+          )[0]
+        );
+        console.log(JSON.parse(e.data).timeOffset / 1000);
+        const lyrics = respone.segments
+          ? respone.segments.filter(
+              (segment: { start: number; end: number }) =>
+                segment.start < JSON.parse(e.data).timeOffset / 1000 &&
+                segment.end > JSON.parse(e.data).timeOffset / 1000
+            )[0]
+          : { id: "", text: "", start: 0, end: 0 };
+        setLyrics({
+          id: lyrics.id,
+          text: lyrics.text,
+          start: lyrics.start,
+          end: lyrics.end,
+        });
+        console.log(lyrics);
+      });
     });
 
     return () => {
@@ -63,8 +90,8 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
           src={song.songurl} // "https://dl.dropbox.com/scl/fi/7sq3pi7dcs8q1sr0z7lk1/Mabel-Don-t-Call-Me-Up.mp3?rlkey=kt4cn9ii34ufutu7rbccnwuqj&dl=0"
           type="audio/mpeg"
         />
-        <Lyrics text={lyrics} />
       </audio>
+      <Lyrics text={lyrics && lyrics.text ? lyrics.text : "Text"} />
     </div>
   );
 };
