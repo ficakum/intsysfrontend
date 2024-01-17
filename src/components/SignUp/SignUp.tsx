@@ -189,7 +189,7 @@ const SignUp = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  id="password"
+                  id="repeat-password"
                   className="signup-password"
                   ref={repeatPasswordInputRef}
                   type={showRepeatPassword ? "text" : "password"}

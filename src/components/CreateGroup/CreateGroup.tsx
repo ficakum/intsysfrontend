@@ -32,7 +32,9 @@ const CreateGroup = () => {
         }
       );
     } else {
-      createGroup({ groupName, membersNum: 1 }).catch((error: unknown) => {
+      createGroup({ groupName, membersNum: 1 })
+      .then(() => alert("Successfully created group"))
+      .catch((error: unknown) => {
         console.log(error);
       });
     }

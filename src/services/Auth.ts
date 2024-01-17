@@ -37,7 +37,6 @@ export const signInUser = async (username: string, password: string) => {
   const newRefreshToken = response.data.refresh_token;
   setCookie(ACCESS_USER_TOKEN_KEY, newAccessUserToken);
   setCookie(REFRESH_TOKEN_KEY, newRefreshToken);
-  console.log(newAccessUserToken);
 };
 
 export const signUpUser = async (
