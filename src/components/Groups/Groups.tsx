@@ -44,8 +44,8 @@ const Groups: FC<IGroupsProps> = ({ userId }) => {
 
   return (
     <div className="groups">
-      {groups.map((group) => (
-        <Group key={group._id} group={group} />
+      {groups.map((group, key) => (
+        <Group key={key} group={group} />
       ))}
       {/* <Pagination
         count={totalPages}

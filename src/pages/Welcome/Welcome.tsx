@@ -40,6 +40,10 @@ const Welcome = () => {
     });
   }, []);
 
+  if (user === initialUser){
+    return null;
+  }
+
   return (
     <div>
       {user.group ? (
