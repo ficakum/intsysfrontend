@@ -13,8 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const pages = ["Home","Groups"];
+const settings = ["Profile", "Account", "Logout"];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -39,7 +39,7 @@ function Header() {
     <AppBar position="static" sx={{ backgroundColor: "rgba(27, 4, 110, 0.95)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -56,7 +56,7 @@ function Header() {
             }}
           >
             AUDITORIUM
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -87,14 +87,14 @@ function Header() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <a href="Home"><img src="logo.png" alt="AUDITORIUM logo" id="logo"/></a>
           <Typography
             variant="h5"
             noWrap
@@ -114,7 +114,7 @@ function Header() {
             AUDITORIUM
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {/* {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -122,13 +122,13 @@ function Header() {
               >
                 {page}
               </Button>
-            ))}
+            ))} */}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="logo32.png" />
               </IconButton>
             </Tooltip>
             <Menu

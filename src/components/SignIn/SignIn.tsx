@@ -106,6 +106,7 @@ const SignIn = ({ className }: ISignInProps) => {
                 fullWidth
                 label="Username"
                 name="email"
+                id="email"
                 autoFocus
                 className="signin-username"
                 ref={usernameInputRef}
@@ -142,7 +143,7 @@ const SignIn = ({ className }: ISignInProps) => {
               <Button
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, backgroundColor: "rgba(144, 12, 63, 0.85)", color: "white", ":hover": {
+                sx={{ mt: 4, mb: 2, backgroundColor: "rgba(144, 12, 63, 0.85)", color: "white", ":hover": {
                   bgcolor: "rgb(144, 12, 63)"}}}
                 onClick={() => onSignIn()}>
                 Sign In
