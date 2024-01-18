@@ -19,7 +19,17 @@ interface ISignInProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-const defaultTheme = createTheme();
+const theme = createTheme({
+  palette: {
+    text:{
+      primary: "#FFFFFF",
+      secondary: "#FFFFFF",
+    },
+    primary: {
+      main: "#FFFFFF",
+    }
+  }
+});
 
 const SignIn = ({ className }: ISignInProps) => {
   const navigate = useNavigate();
@@ -72,7 +82,7 @@ const SignIn = ({ className }: ISignInProps) => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -120,7 +130,7 @@ const SignIn = ({ className }: ISignInProps) => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton
+                      <IconButton sx={{color: "white" }}
                         onClick={handleTogglePasswordVisibility}
                         edge="end">
                         {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -132,7 +142,8 @@ const SignIn = ({ className }: ISignInProps) => {
               <Button
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, backgroundColor: "rgba(144, 12, 63, 0.85)", color: "white", ":hover": {
+                  bgcolor: "rgb(144, 12, 63)"}}}
                 onClick={() => onSignIn()}>
                 Sign In
               </Button>
