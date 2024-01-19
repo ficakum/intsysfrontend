@@ -1,8 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Playlist from "../Playlist";
 import { IRecommendedSong } from "../../models";
 import Recommendation from "../Recommendation";
 import AddSong from "../AddSong";
+import { getRecommendations } from "../../services/Track";
 
 interface ISongsSectionProps {
   groupId: string;
@@ -12,6 +13,16 @@ const SongsSection: FC<ISongsSectionProps> = ({ groupId }) => {
   const [recommendations, setRecommendations] = useState<IRecommendedSong[]>(
     []
   );
+
+  useEffect(() => {
+    getRecommendations(groupId)
+      .then((response: Array<IRecommendedSong>) => {
+        setRecommendations(response);
+      })
+      .catch((error: unknown) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <div>

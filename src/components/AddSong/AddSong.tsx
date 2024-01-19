@@ -80,14 +80,14 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
         className="signin-username"
         ref={searchNameInputRef}
         type="text"
-        placeholder="Enter username"
+        placeholder="Enter song name"
         onChange={handleSearchNameChange}
       />
       <TextField
         className="signin-username"
         ref={searchAuthorInputRef}
         type="text"
-        placeholder="Enter username"
+        placeholder="Enter author"
         onChange={handleSearchAuthorChange}
       />
       <Button onClick={() => onSearch()}>Search</Button>

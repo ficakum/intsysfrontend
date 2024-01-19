@@ -14,7 +14,7 @@ const Recommendation: FC<IRecommendationsProps> = ({
   setRecommendations,
   groupId,
 }) => {
-  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean[]>([]);
 
   const onAdd = (song: IRecommendedSong) => {
     addSong({ trackInformation: song._id, group: groupId }).catch(
@@ -32,24 +32,32 @@ const Recommendation: FC<IRecommendationsProps> = ({
       });
   };
 
+  const setButtonHover = (index: number, hovered: boolean) => {
+    const hover = isHovered;
+
+    hover[index] = hovered;
+
+    setIsHovered(hover);
+  };
+
   return (
     <div>
-      {recommendations.map((song) => (
+      {recommendations.map((song, index) => (
         <div key={song._id}>
           <p>{song.name}</p>
           <p>{song.author}</p>
           <p>{song.genre}</p>
           <Button
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onTouchStart={() => setIsHovered(true)}
-            onTouchEnd={() => setIsHovered(false)}
+            onMouseEnter={() => setButtonHover(index, true)}
+            onMouseLeave={() => setButtonHover(index, false)}
+            onTouchStart={() => setButtonHover(index, true)}
+            onTouchEnd={() => setButtonHover(index, false)}
             onClick={() => onAdd(song)}
             style={{
               padding: "15px 32px 15px 32px",
-              border: isHovered ? "" : "2px solid #4B4B4B",
+              border: isHovered[index] ? "" : "2px solid #4B4B4B",
               color: "#4B4B4B",
-              boxShadow: isHovered
+              boxShadow: isHovered[index]
                 ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
                 : "",
             }}>
