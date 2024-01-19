@@ -65,7 +65,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
             start: lyrics.start,
             end: lyrics.end,
           });
-          console.log(lyrics);
         })
         .catch((error) => console.log(error));
     });
