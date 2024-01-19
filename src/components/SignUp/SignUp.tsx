@@ -16,7 +16,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const defaultTheme = createTheme();
+const theme = createTheme({
+  palette: {
+    text:{
+      primary: "#FFFFFF",
+      secondary: "#FFFFFF",
+    },
+    primary: {
+      main: "#FFFFFF",
+    }
+  }
+});
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -103,7 +113,7 @@ const SignUp = () => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -173,7 +183,7 @@ const SignUp = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton
+                        <IconButton sx={{color: "white" }}
                           onClick={handleTogglePasswordVisibility}
                           edge="end">
                           {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -188,7 +198,7 @@ const SignUp = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Repeat password"
                   id="repeat-password"
                   className="signup-password"
                   ref={repeatPasswordInputRef}
@@ -199,7 +209,7 @@ const SignUp = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton
+                        <IconButton sx={{color: "white" }}
                           onClick={handleToggleRepeatPasswordVisibility}
                           edge="end">
                           {showRepeatPassword ? (
@@ -217,7 +227,8 @@ const SignUp = () => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: "rgba(144, 12, 63, 0.85)", color: "white", ":hover": {
+                bgcolor: "rgb(144, 12, 63)"}}}
               onClick={() => onSignUp()}>
               Sign Up
             </Button>

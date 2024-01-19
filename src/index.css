@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background-image: url('background.jpg');
+  background-size: 50%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +12,13 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#firstName, #email, #password, #repeat-password{
+  background-color: rgba(93, 26, 155, 0.93);
+}
+
+#logo{
+  width: 225px;
+  height: auto;
 }
