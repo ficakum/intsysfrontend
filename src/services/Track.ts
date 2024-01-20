@@ -33,7 +33,7 @@ export const getTrackInfos = async (
     `${getTrackInfosURL}${pageQuery}${limitQuery}${nameQuery}${authorQuery}`
   );
 
-  return response.data.items;
+  return response.data;
 };
 
 export const addSong = async (track: ITrack) => {

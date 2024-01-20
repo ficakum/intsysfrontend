@@ -1,25 +1,21 @@
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { AxiosError } from "axios";
 
-import { IGroup } from "../../models";
+import { IGroup, IUser } from "../../models";
 import { getGroups } from "../../services/Group";
 import Group from "../Group/Group";
-// import { Pagination } from "@mui/material";
 
 interface IGroupsProps {
   userId: string;
+  setUser: Dispatch<SetStateAction<IUser>>;
 }
-const Groups: FC<IGroupsProps> = ({ userId }) => {
+const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
   const [groups, setGroups] = useState<Array<IGroup>>([]);
-  // const [currentPage, setCurrentPage] = useState<number>(0);
-  // const [totalPages, setTotalPages] = useState<number>(0);
 
   useEffect(() => {
     getGroups(userId)
       .then((groupsPaginated) => {
         setGroups(groupsPaginated);
-        // setCurrentPage(groupsPaginated.currentPage);
-        // setTotalPages(groupsPaginated.totalPages);
 
         return;
       })
@@ -28,32 +24,11 @@ const Groups: FC<IGroupsProps> = ({ userId }) => {
       });
   }, []);
 
-  // const handlePageChange = () => {
-  //   getGroups()
-  //     .then((groupsPaginated) => {
-  //       setGroups(groupsPaginated);
-  //       // setCurrentPage(groupsPaginated.currentPage);
-  //       // setTotalPages(groupsPaginated.totalPages);
-
-  //       return;
-  //     })
-  //     .catch((error: AxiosError) => {
-  //       console.log(error);
-  //     });
-  // };
-
   return (
     <div className="groups">
       {groups.map((group, key) => (
-        <Group key={key} group={group} />
+        <Group key={key} group={group} setUser={setUser} />
       ))}
-      {/* <Pagination
-        count={totalPages}
-        page={currentPage}
-        onChange={handlePageChange}
-        color="primary"
-        shape="rounded"
-      /> */}
     </div>
   );
 };

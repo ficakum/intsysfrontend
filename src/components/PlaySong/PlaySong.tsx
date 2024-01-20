@@ -50,15 +50,25 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
     eventSource.addEventListener("CURRENT_TRACK", (e) => {
       setSong(JSON.parse(e.data));
-      getLyrics("65a072fb6dff1f21c44e23c8" /* JSON.parse(e.data).externalId */)
+      getLyrics(/*  "65a072fb6dff1f21c44e23c8" */ JSON.parse(e.data).externalId)
         .then((respone: { segments: [] }) => {
-          const lyrics = respone.segments
+          const lyrics: {
+            id: string;
+            text: string;
+            start: number;
+            end: number;
+          } = respone.segments.length
             ? respone.segments.filter(
-                (segment: { start: number; end: number }) =>
+                (segment: {
+                  id: string;
+                  text: string;
+                  start: number;
+                  end: number;
+                }) =>
                   segment.start < JSON.parse(e.data).timeOffset / 1000 &&
                   segment.end > JSON.parse(e.data).timeOffset / 1000
               )[0]
-            : { id: "", text: "", start: 0, end: 0 };
+            : { id: "", text: "Text", start: 0, end: 0 };
           setLyrics({
             id: lyrics.id,
             text: lyrics.text,

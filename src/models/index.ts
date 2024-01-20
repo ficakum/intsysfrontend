@@ -31,8 +31,8 @@ export interface Song {
   name: string;
 }
 
-export interface IRecommendedSong extends Song {
-  _id: string;
+export interface IRecommendedSong {
+  _id: { $oid: string };
   name: string;
   author: string;
   genre: string;
@@ -44,7 +44,7 @@ export interface ITrack {
 }
 
 export interface IGroup {
-  _id: string;
+  _id: { $oid: string };
   groupName: string;
   currentTrack: string;
   maxMembers: number;

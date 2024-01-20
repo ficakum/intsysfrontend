@@ -33,14 +33,18 @@ const Welcome = () => {
   const [user, setUser] = useState<IUser>(initialUser);
 
   useEffect(() => {
-    getLoggedInUser().then((user: IUser) => {
-      setUser(user);
+    getLoggedInUser()
+      .then((user: IUser) => {
+        setUser(user);
 
-      return;
-    });
+        return;
+      })
+      .catch((error: unknown) => {
+        console.log(error);
+      });
   }, []);
 
-  if (user === initialUser){
+  if (user === initialUser) {
     return null;
   }
 
@@ -54,7 +58,7 @@ const Welcome = () => {
       ) : (
         <div>
           <CreateGroup />
-          <Groups userId={user._id} />
+          <Groups setUser={setUser} userId={user._id} />
         </div>
       )}
     </div>

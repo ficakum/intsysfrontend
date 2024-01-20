@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Pagination, TextField } from "@mui/material";
 import {
   ChangeEvent,
   Dispatch,
@@ -14,6 +14,7 @@ import {
   getRecommendations,
   getTrackInfos,
 } from "../../services/Track";
+import Song from "../Song";
 
 interface IAddSongProps {
   groupId: string;
@@ -26,7 +27,8 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   const [searchName, setSearchName] = useState<string>("");
   const [searchAuthor, setSearchAuthor] = useState<string>("");
   const [songs, setSongs] = useState<IRecommendedSong[]>([]);
-  const [isHoveredAdd, setIsHoveredAdd] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
   const handleSearchNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newSearchName = event.target.value;
@@ -40,13 +42,39 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
 
   useEffect(() => {
     getTrackInfos(1, 10)
-      .then((response: IRecommendedSong[]) => {
-        setSongs(response);
-      })
+      .then(
+        (response: {
+          items: IRecommendedSong[];
+          currentPage: number;
+          totalPages: number;
+        }) => {
+          setSongs(response.items);
+          setCurrentPage(response.currentPage);
+          setTotalPages(response.totalPages);
+        }
+      )
       .catch((error: unknown) => {
         console.log(error);
       });
   }, []);
+
+  const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
+    getTrackInfos(value, 10)
+      .then(
+        (response: {
+          items: IRecommendedSong[];
+          currentPage: number;
+          totalPages: number;
+        }) => {
+          setSongs(response.items);
+          setCurrentPage(response.currentPage);
+          setTotalPages(response.totalPages);
+        }
+      )
+      .catch((error: unknown) => {
+        console.log(error);
+      });
+  };
 
   const onSearch = () => {
     getTrackInfos(1, 10, searchName, searchAuthor)
@@ -59,7 +87,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   };
 
   const onAdd = (song: IRecommendedSong) => {
-    addSong({ trackInformation: song._id, group: groupId }).catch(
+    addSong({ trackInformation: song._id.$oid, group: groupId }).catch(
       (error: unknown) => {
         console.log(error);
       }
@@ -92,28 +120,15 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
       />
       <Button onClick={() => onSearch()}>Search</Button>
       {songs.map((song) => (
-        <div key={song._id}>
-          <p>{song.name}</p>
-          <p>{song.author}</p>
-          <p>{song.genre}</p>
-          <Button
-            onMouseEnter={() => setIsHoveredAdd(true)}
-            onMouseLeave={() => setIsHoveredAdd(false)}
-            onTouchStart={() => setIsHoveredAdd(true)}
-            onTouchEnd={() => setIsHoveredAdd(false)}
-            onClick={() => onAdd(song)}
-            style={{
-              padding: "15px 32px 15px 32px",
-              border: isHoveredAdd ? "" : "2px solid #4B4B4B",
-              color: "#4B4B4B",
-              boxShadow: isHoveredAdd
-                ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
-                : "",
-            }}>
-            Add Song
-          </Button>
-        </div>
+        <Song key={song._id.$oid} song={song} onAdd={onAdd} />
       ))}
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={handlePageChange}
+        color="primary"
+        shape="rounded"
+      />
     </div>
   );
 };
