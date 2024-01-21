@@ -61,7 +61,7 @@ const Welcome = () => {
         </div>
       ) : (
         <div>
-          <CreateGroup />
+          <CreateGroup setUser={setUser} />
           <Groups setUser={setUser} userId={user._id} />
         </div>
       )}

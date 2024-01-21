@@ -1,8 +1,21 @@
 import { Button, TextField } from "@mui/material";
-import { ChangeEvent, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 import { createGroup } from "../../services/Group";
+import { IUser } from "../../models";
+import { getLoggedInUser } from "../../services/Auth";
 
-const CreateGroup = () => {
+interface ICreateGroupProps {
+  setUser: Dispatch<SetStateAction<IUser>>;
+}
+
+const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
   const groupNameInputRef = useRef<HTMLInputElement | null>(null);
   const maxMembersInputRef = useRef<HTMLInputElement | null>(null);
   const [groupName, setGroupName] = useState<string>("");
@@ -26,17 +39,44 @@ const CreateGroup = () => {
     }
 
     if (maxMembers) {
-      createGroup({ groupName, maxMembers, membersNum: 1 }).catch(
-        (error: unknown) => {
+      createGroup({ groupName, maxMembers, membersNum: 1 })
+        .then(() => {
+          getLoggedInUser()
+            .then((user: IUser) => {
+              setUser(user);
+              console.log(user);
+
+              return;
+            })
+            .catch((error: unknown) => {
+              console.log(error);
+            });
+
+          alert("Successfully created group");
+        })
+        .catch((error: unknown) => {
           console.log(error);
-        }
-      );
+        });
     } else {
       createGroup({ groupName, membersNum: 1 })
-      .then(() => alert("Successfully created group"))
-      .catch((error: unknown) => {
-        console.log(error);
-      });
+        .then((response: unknown) => {
+          console.log(response);
+          getLoggedInUser()
+            .then((user: IUser) => {
+              setUser(user);
+              console.log(user);
+
+              return;
+            })
+            .catch((error: unknown) => {
+              console.log(error);
+            });
+
+          alert("Successfully created group");
+        })
+        .catch((error: unknown) => {
+          console.log(error);
+        });
     }
   };
 
