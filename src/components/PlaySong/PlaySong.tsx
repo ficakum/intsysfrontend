@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
 import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
@@ -11,6 +11,7 @@ interface IPlaySongProps {
 }
 
 const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [song, setSong] = useState<{
     songurl: string;
     id: string;
@@ -49,7 +50,14 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     );
 
     eventSource.addEventListener("CURRENT_TRACK", (e) => {
+      const eventData = JSON.parse(e.data);
+
       setSong(JSON.parse(e.data));
+
+      if (audioRef.current) {
+        audioRef.current.currentTime = eventData.timeOffset / 1000;
+      }
+
       getLyrics(/*  "65a072fb6dff1f21c44e23c8" */ JSON.parse(e.data).externalId)
         .then((respone: { segments: [] }) => {
           const lyrics: {
@@ -86,7 +94,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
   return (
     <div>
-      <audio controls>
+      <audio controls ref={audioRef}>
         <source
           src={song.songurl} // "https://dl.dropbox.com/scl/fi/7sq3pi7dcs8q1sr0z7lk1/Mabel-Don-t-Call-Me-Up.mp3?rlkey=kt4cn9ii34ufutu7rbccnwuqj&dl=0"
           type="audio/mpeg"
