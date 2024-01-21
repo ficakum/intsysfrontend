@@ -5,6 +5,8 @@ import { getLoggedInUser } from "../../services/Auth";
 import PlaySong from "../../components/PlaySong";
 import SongsSection from "../../components/SongsSection";
 import CreateGroup from "../../components/CreateGroup";
+import LeaveGroup from "../../components/LeaveGroup";
+import SignOut from "../../components/SignOut";
 
 // import * as React from "react";
 // import AppBar from "@mui/material/AppBar";
@@ -50,9 +52,11 @@ const Welcome = () => {
 
   return (
     <div>
+      <SignOut />
       {user.group ? (
         <div>
           <PlaySong groupId={user.group} />
+          <LeaveGroup groupId={user.group} setUser={setUser} />
           <SongsSection groupId={user.group} />
         </div>
       ) : (

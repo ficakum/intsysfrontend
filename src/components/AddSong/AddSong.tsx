@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { IRecommendedSong } from "../../models";
+import { IRecommendedSong, ISong } from "../../models";
 import {
   addSong,
   getRecommendations,
@@ -26,7 +26,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   const searchAuthorInputRef = useRef<HTMLInputElement | null>(null);
   const [searchName, setSearchName] = useState<string>("");
   const [searchAuthor, setSearchAuthor] = useState<string>("");
-  const [songs, setSongs] = useState<IRecommendedSong[]>([]);
+  const [songs, setSongs] = useState<ISong[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
@@ -44,7 +44,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
     getTrackInfos(1, 10)
       .then(
         (response: {
-          items: IRecommendedSong[];
+          items: ISong[];
           currentPage: number;
           totalPages: number;
         }) => {
@@ -62,7 +62,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
     getTrackInfos(value, 10)
       .then(
         (response: {
-          items: IRecommendedSong[];
+          items: ISong[];
           currentPage: number;
           totalPages: number;
         }) => {
@@ -78,7 +78,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
 
   const onSearch = () => {
     getTrackInfos(1, 10, searchName, searchAuthor)
-      .then((response: IRecommendedSong[]) => {
+      .then((response: ISong[]) => {
         setSongs(response);
       })
       .catch((error: unknown) => {
@@ -86,8 +86,8 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
       });
   };
 
-  const onAdd = (song: IRecommendedSong) => {
-    addSong({ trackInformation: song._id.$oid, group: groupId }).catch(
+  const onAdd = (song: ISong) => {
+    addSong({ trackInformation: song._id, group: groupId }).catch(
       (error: unknown) => {
         console.log(error);
       }
@@ -120,7 +120,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
       />
       <Button onClick={() => onSearch()}>Search</Button>
       {songs.map((song) => (
-        <Song key={song._id.$oid} song={song} onAdd={onAdd} />
+        <Song key={song._id} song={song} onAdd={onAdd} />
       ))}
       <Pagination
         count={totalPages}

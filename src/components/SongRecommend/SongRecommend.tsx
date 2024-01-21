@@ -1,12 +1,12 @@
 import { Button } from "@mui/material";
 import { FC, useState } from "react";
-import { ISong } from "../../models";
+import { IRecommendedSong } from "../../models";
 
-interface ISongProps {
-  song: ISong;
-  onAdd: (song: ISong) => void;
+interface ISongRecommendProps {
+  song: IRecommendedSong;
+  onAdd: (song: IRecommendedSong) => void;
 }
-const Song: FC<ISongProps> = ({ song, onAdd }) => {
+const Song: FC<ISongRecommendProps> = ({ song, onAdd }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <div>

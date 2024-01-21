@@ -38,6 +38,13 @@ export interface IRecommendedSong {
   genre: string;
 }
 
+export interface ISong {
+  _id: string;
+  name: string;
+  author: string;
+  genre: string;
+}
+
 export interface ITrack {
   group: string;
   trackInformation: string;
