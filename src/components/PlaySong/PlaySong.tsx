@@ -57,6 +57,10 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
       setSong({
         ...eventData,
         audio_link: (eventData.audio_link as string).replace("www.", "dl."),
+        album_cover_link: (eventData.album_cover_link as string).replace(
+          "www.",
+          "dl."
+        ),
       });
 
       if (audioRef.current) {
