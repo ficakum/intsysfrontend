@@ -97,13 +97,34 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     };
   }, []);
 
+  const handleAudioEnded = () => {
+    // Handle the "ended" event to reset the songUrl or fetch the next song
+    // This is where you can implement logic to play the next song if needed
+    setSong({
+      songurl: "",
+      id: "",
+      infoId: "",
+      name: "",
+      timeOffset: 0,
+      externalId: "",
+      audio_link: "",
+      vocals_link: "",
+      instrumental_link: "",
+      album_cover_link: "",
+    });
+  };
+
   return (
     <div>
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
       {song.audio_link && (
-        <audio controls ref={audioRef}>
+        <audio
+          key={song.audio_link}
+          controls
+          ref={audioRef}
+          onEnded={handleAudioEnded}>
           <source src={song.audio_link} type="audio/mpeg" />
         </audio>
       )}
