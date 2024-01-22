@@ -3,6 +3,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { leaveGroup } from "../../services/Group";
 import { IUser } from "../../models";
 import { getLoggedInUser } from "../../services/Auth";
+import "./LeaveGroup.scss"
 
 interface ILeaveGroupProps {
   groupId: string;
@@ -30,7 +31,7 @@ const LeaveGroup: FC<ILeaveGroupProps> = ({ groupId, setUser }) => {
 
   return (
     <div>
-      <Button onClick={onLeaveGroup}>Leave Group</Button>
+      <Button className="leave-btn" onClick={onLeaveGroup}>Leave current group</Button>
     </div>
   );
 };

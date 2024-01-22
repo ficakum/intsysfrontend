@@ -2,6 +2,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { IRecommendedSong } from "../../models";
 import { addSong, getRecommendations } from "../../services/Track";
 import SongRecommend from "../SongRecommend";
+import "./Recommendation.scss"
 
 interface IRecommendationsProps {
   recommendations: IRecommendedSong[];
@@ -31,7 +32,7 @@ const Recommendation: FC<IRecommendationsProps> = ({
   };
 
   return (
-    <div>
+    <div className="songs">
       {recommendations.map((song) => (
         <SongRecommend key={song._id.$oid} song={song} onAdd={onAdd} />
       ))}

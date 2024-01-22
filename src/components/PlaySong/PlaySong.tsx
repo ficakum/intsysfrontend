@@ -3,6 +3,7 @@ import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
 import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
 import { getCookie } from "typescript-cookie";
+import "./PlaySong.scss";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -80,7 +81,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
                   segment.start < JSON.parse(e.data).timeOffset / 1000 &&
                   segment.end > JSON.parse(e.data).timeOffset / 1000
               )[0]
-            : { id: "", text: "Text", start: 0, end: 0 };
+            : { id: "", text: "No lyrics", start: 0, end: 0 };
           setLyrics({
             id: lyrics.id,
             text: lyrics.text,
@@ -98,12 +99,15 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
   return (
     <div>
+      {song.album_cover_link && (
+        <img className="curr-song-img" src={song.album_cover_link} />
+      )}
       {song.audio_link && (
         <audio controls ref={audioRef}>
           <source src={song.audio_link} type="audio/mpeg" />
         </audio>
       )}
-      <Lyrics text={lyrics && lyrics.text ? lyrics.text : "Text"} />
+      <Lyrics text={lyrics && lyrics.text ? lyrics.text : "No lyrics"} />
     </div>
   );
 };

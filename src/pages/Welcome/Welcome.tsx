@@ -55,9 +55,11 @@ const Welcome = () => {
     <div className="welcome">
       <Header showMenu="true" />
       {user.group ? (
-        <div>
-          <PlaySong groupId={user.group} />
-          <LeaveGroup groupId={user.group} setUser={setUser} />
+        <div className="in-group-div">
+          <div className="song-and-leave-btn"> 
+            <PlaySong groupId={user.group} />
+            <LeaveGroup groupId={user.group} setUser={setUser} />
+          </div>
           <SongsSection groupId={user.group} />
         </div>
       ) : (

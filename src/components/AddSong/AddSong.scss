@@ -1,0 +1,35 @@
+.all-songs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-div{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+button.search-song-btn{
+    background-color: rgb(38, 17, 93);
+    color: white;
+}
+
+button.search-song-btn:hover{
+    background-color: rgb(11, 11, 85);
+    box-shadow: 0px 4px 15px 0px #000000, 0px -4px 15px 0px #ffffff;
+    color: white;
+}
+
+.songs{
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagination{
+    background-color: white;
+}
