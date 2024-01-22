@@ -1,4 +1,4 @@
-import { FC, useEffect /* , useRef */, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
 import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
@@ -11,7 +11,7 @@ interface IPlaySongProps {
 }
 
 const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
-  // const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [song, setSong] = useState<{
     songurl: string;
     id: string;
@@ -58,9 +58,9 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
         audio_link: (eventData.audio_link as string).replace("www.", "dl."),
       });
 
-      // if (audioRef.current) {
-      //   audioRef.current.currentTime = eventData.timeOffset / 1000;
-      // }
+      if (audioRef.current) {
+        audioRef.current.currentTime = eventData.timeOffset / 1000;
+      }
 
       getLyrics(JSON.parse(e.data).externalId)
         .then((respone: { segments: [] }) => {
@@ -98,9 +98,11 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
   return (
     <div>
-      <audio controls /* ref={audioRef} */>
-        <source src={song.audio_link} type="audio/mpeg" />
-      </audio>
+      {song.audio_link && (
+        <audio controls ref={audioRef}>
+          <source src={song.audio_link} type="audio/mpeg" />
+        </audio>
+      )}
       <Lyrics text={lyrics && lyrics.text ? lyrics.text : "Text"} />
     </div>
   );

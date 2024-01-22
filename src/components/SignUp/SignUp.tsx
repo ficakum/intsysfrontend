@@ -18,14 +18,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
-    text:{
+    text: {
       primary: "#FFFFFF",
       secondary: "#FFFFFF",
     },
     primary: {
       main: "#FFFFFF",
-    }
-  }
+    },
+  },
 });
 
 const SignUp = () => {
@@ -107,9 +107,11 @@ const SignUp = () => {
       return;
     }
 
-    await signUpUser(username, password, email);
-
-    navigate("/Welcome");
+    await signUpUser(username, password, email)
+      .then(() => navigate("/Welcome"))
+      .catch((error: unknown) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -167,7 +169,8 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField sx={{backgroundColor: "rgba(93, 26, 155, 0.93)" }}
+                <TextField
+                  sx={{ backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                   required
                   fullWidth
                   name="password"
@@ -183,7 +186,8 @@ const SignUp = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton sx={{color: "white" }}
+                        <IconButton
+                          sx={{ color: "white" }}
                           onClick={handleTogglePasswordVisibility}
                           edge="end">
                           {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -194,7 +198,8 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField sx={{backgroundColor: "rgba(93, 26, 155, 0.93)" }}
+                <TextField
+                  sx={{ backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                   required
                   fullWidth
                   name="password"
@@ -209,7 +214,8 @@ const SignUp = () => {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton sx={{color: "white" }}
+                        <IconButton
+                          sx={{ color: "white" }}
                           onClick={handleToggleRepeatPasswordVisibility}
                           edge="end">
                           {showRepeatPassword ? (
@@ -227,8 +233,15 @@ const SignUp = () => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: "rgba(144, 12, 63, 0.85)", color: "white", ":hover": {
-                bgcolor: "rgb(144, 12, 63)"}}}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: "rgba(144, 12, 63, 0.85)",
+                color: "white",
+                ":hover": {
+                  bgcolor: "rgb(144, 12, 63)",
+                },
+              }}
               onClick={() => onSignUp()}>
               Sign Up
             </Button>

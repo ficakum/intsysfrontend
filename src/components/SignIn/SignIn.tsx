@@ -21,14 +21,14 @@ interface ISignInProps extends HTMLAttributes<HTMLDivElement> {
 
 const theme = createTheme({
   palette: {
-    text:{
+    text: {
       primary: "#FFFFFF",
       secondary: "#FFFFFF",
     },
     primary: {
       main: "#FFFFFF",
-    }
-  }
+    },
+  },
 });
 
 const SignIn = ({ className }: ISignInProps) => {
@@ -76,9 +76,9 @@ const SignIn = ({ className }: ISignInProps) => {
       return;
     }
 
-    await signInUser(username, password);
-
-    navigate("/Welcome");
+    await signInUser(username, password)
+      .then(() => navigate("/Welcome"))
+      .catch((error: unknown) => console.log(error));
   };
 
   return (
@@ -114,7 +114,8 @@ const SignIn = ({ className }: ISignInProps) => {
                 error={isUsernameInvalid}
                 onChange={handleUsernameChange}
               />
-              <TextField sx={{backgroundColor: "rgba(93, 26, 155, 0.93)" }}
+              <TextField
+                sx={{ backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                 margin="normal"
                 required
                 fullWidth
@@ -131,7 +132,8 @@ const SignIn = ({ className }: ISignInProps) => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton sx={{color: "white" }}
+                      <IconButton
+                        sx={{ color: "white" }}
                         onClick={handleTogglePasswordVisibility}
                         edge="end">
                         {showPassword ? <Visibility /> : <VisibilityOff />}
@@ -143,8 +145,15 @@ const SignIn = ({ className }: ISignInProps) => {
               <Button
                 fullWidth
                 variant="contained"
-                sx={{ mt: 4, mb: 2, backgroundColor: "rgba(144, 12, 63, 0.85)", color: "white", ":hover": {
-                  bgcolor: "rgb(144, 12, 63)"}}}
+                sx={{
+                  mt: 4,
+                  mb: 2,
+                  backgroundColor: "rgba(144, 12, 63, 0.85)",
+                  color: "white",
+                  ":hover": {
+                    bgcolor: "rgb(144, 12, 63)",
+                  },
+                }}
                 onClick={() => onSignIn()}>
                 Sign In
               </Button>
