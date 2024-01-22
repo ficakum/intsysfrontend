@@ -167,7 +167,7 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextField sx={{backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                   required
                   fullWidth
                   name="password"
@@ -194,7 +194,7 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextField sx={{backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                   required
                   fullWidth
                   name="password"

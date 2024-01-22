@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { IGroup, IUser } from "../../models";
 import { getGroups } from "../../services/Group";
 import Group from "../Group/Group";
+import "./Groups.scss"
 
 interface IGroupsProps {
   userId: string;

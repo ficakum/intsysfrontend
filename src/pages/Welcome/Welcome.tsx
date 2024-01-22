@@ -6,7 +6,8 @@ import PlaySong from "../../components/PlaySong";
 import SongsSection from "../../components/SongsSection";
 import CreateGroup from "../../components/CreateGroup";
 import LeaveGroup from "../../components/LeaveGroup";
-import SignOut from "../../components/SignOut";
+import Header from "../../components/Header";
+import "./Welcome.scss"
 
 // import * as React from "react";
 // import AppBar from "@mui/material/AppBar";
@@ -51,8 +52,8 @@ const Welcome = () => {
   }
 
   return (
-    <div>
-      <SignOut />
+    <div className="welcome">
+      <Header showMenu="true" />
       {user.group ? (
         <div>
           <PlaySong groupId={user.group} />

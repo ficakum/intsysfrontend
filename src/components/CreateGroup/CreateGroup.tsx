@@ -1,4 +1,5 @@
 import { Button, TextField } from "@mui/material";
+import "./CreateGroup.scss"
 import {
   ChangeEvent,
   Dispatch,
@@ -81,7 +82,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
   };
 
   return (
-    <div>
+    <div className="create-group">
       <TextField
         className="creategroup-groupname"
         ref={groupNameInputRef}

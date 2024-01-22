@@ -114,7 +114,7 @@ const SignIn = ({ className }: ISignInProps) => {
                 error={isUsernameInvalid}
                 onChange={handleUsernameChange}
               />
-              <TextField
+              <TextField sx={{backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                 margin="normal"
                 required
                 fullWidth
