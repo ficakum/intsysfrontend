@@ -8,15 +8,15 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+// import Button from "@mui/material/Button";
+// import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+// import AdbIcon from "@mui/icons-material/Adb";
 import SignOut from "../../components/SignOut";
 import {FC} from "react"
 
 // const pages = ["Home","Groups"];
-const settings = ["Profile", "Account", "Logout"];
+// const settings = ["Profile", "Account", "Logout"];
 
 
 interface IHeaderProps {
@@ -102,11 +102,9 @@ const Header: FC<IHeaderProps> = ({ showMenu }) => {
           {
             showMenu === "true" ?  
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar alt="Remy Sharp" />
+            </IconButton>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
