@@ -15,6 +15,7 @@ import {
   getTrackInfos,
 } from "../../services/Track";
 import Song from "../Song";
+import "./AddSong.scss"
 
 interface IAddSongProps {
   groupId: string;
@@ -103,26 +104,30 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   };
 
   return (
-    <div>
-      <TextField
-        className="signin-username"
-        ref={searchNameInputRef}
-        type="text"
-        placeholder="Enter song name"
-        onChange={handleSearchNameChange}
-      />
-      <TextField
-        className="signin-username"
-        ref={searchAuthorInputRef}
-        type="text"
-        placeholder="Enter author"
-        onChange={handleSearchAuthorChange}
-      />
-      <Button onClick={() => onSearch()}>Search</Button>
-      {songs.map((song) => (
-        <Song key={song._id} song={song} onAdd={onAdd} />
-      ))}
-      <Pagination
+    <div className="all-songs">
+      <div className="search-div">
+        <TextField
+          className="song-name"
+          ref={searchNameInputRef}
+          type="text"
+          placeholder="Enter song name"
+          onChange={handleSearchNameChange}
+        />
+        <TextField
+          className="song-author"
+          ref={searchAuthorInputRef}
+          type="text"
+          placeholder="Enter author"
+          onChange={handleSearchAuthorChange}
+        />
+        <Button className="search-song-btn" onClick={() => onSearch()}>Search</Button>
+      </div>
+      <div className="songs">
+        {songs.map((song) => (
+          <Song key={song._id} song={song} onAdd={onAdd} />
+        ))}
+      </div>
+      <Pagination className="pagination"
         count={totalPages}
         page={currentPage}
         onChange={handlePageChange}
