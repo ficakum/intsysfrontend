@@ -1,5 +1,3 @@
-import { Button, TextField } from "@mui/material";
-import "./CreateGroup.scss"
 import {
   ChangeEvent,
   Dispatch,
@@ -8,9 +6,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { createGroup } from "../../services/Group";
+import { Button, TextField } from "@mui/material";
 import { IUser } from "../../models";
+import { createGroup } from "../../services/Group";
 import { getLoggedInUser } from "../../services/Auth";
+import "./CreateGroup.scss"
 
 interface ICreateGroupProps {
   setUser: Dispatch<SetStateAction<IUser>>;

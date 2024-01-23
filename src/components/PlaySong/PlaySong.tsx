@@ -1,8 +1,8 @@
 import { FC, useEffect, useRef, useState } from "react";
+import { getCookie } from "typescript-cookie";
+import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
 import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
-import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
-import { getCookie } from "typescript-cookie";
 import "./PlaySong.scss";
 
 const apiUrl = process.env.REACT_APP_API_URL;

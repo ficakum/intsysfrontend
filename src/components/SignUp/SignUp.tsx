@@ -1,12 +1,7 @@
 import { ChangeEvent, useRef, useState } from "react";
-import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-import "./SignUp.scss";
-
-import { signUpUser } from "../../services/Auth";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
@@ -15,6 +10,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { signUpUser } from "../../services/Auth";
+import "./SignUp.scss";
 
 const theme = createTheme({
   palette: {
@@ -134,10 +131,11 @@ const SignUp = () => {
           <Box
             component="form"
             noValidate
-            /* onSubmit={handleSubmit} */ sx={{ mt: 3 }}>
+            sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  sx={{ backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                   autoComplete="given-name"
                   name="firstName"
                   id="firstName"
@@ -155,6 +153,7 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={{ backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                   required
                   fullWidth
                   id="email"

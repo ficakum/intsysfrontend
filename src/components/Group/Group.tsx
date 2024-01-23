@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { IGroup, IUser } from "../../models";
 import { Button } from "@mui/material";
+import { IGroup, IUser } from "../../models";
 import { joinGroup } from "../../services/Group";
 import { getLoggedInUser } from "../../services/Auth";
 

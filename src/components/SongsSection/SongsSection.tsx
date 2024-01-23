@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import Playlist from "../Playlist";
 import { IRecommendedSong } from "../../models";
 import Recommendation from "../Recommendation";
 import AddSong from "../AddSong";
+import Playlist from "../Playlist";
 import { getRecommendations } from "../../services/Track";
 
 interface ISongsSectionProps {
