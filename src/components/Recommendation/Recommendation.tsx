@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { IRecommendedSong } from "../../models";
-import { addSong, getRecommendations } from "../../services/Track";
 import SongRecommend from "../SongRecommend";
+import { addSong, getRecommendations } from "../../services/Track";
 import "./Recommendation.scss"
 
 interface IRecommendationsProps {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import Groups from "../../components/Groups";
 import { IUser, initialUser } from "../../models";
-import { getLoggedInUser } from "../../services/Auth";
+import Groups from "../../components/Groups";
 import PlaySong from "../../components/PlaySong";
 import SongsSection from "../../components/SongsSection";
 import CreateGroup from "../../components/CreateGroup";
 import LeaveGroup from "../../components/LeaveGroup";
 import Header from "../../components/Header";
+import { getLoggedInUser } from "../../services/Auth";
 import "./Welcome.scss"
 
 // import * as React from "react";

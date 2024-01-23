@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
 import { Dispatch, FC, SetStateAction } from "react";
-import { leaveGroup } from "../../services/Group";
+import { Button } from "@mui/material";
 import { IUser } from "../../models";
+import { leaveGroup } from "../../services/Group";
 import { getLoggedInUser } from "../../services/Auth";
 import "./LeaveGroup.scss"
 

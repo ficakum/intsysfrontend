@@ -1,4 +1,3 @@
-import { Button, Pagination, TextField } from "@mui/material";
 import {
   ChangeEvent,
   Dispatch,
@@ -8,13 +7,14 @@ import {
   useRef,
   useState,
 } from "react";
+import { Button, Pagination, TextField } from "@mui/material";
 import { IRecommendedSong, ISong } from "../../models";
+import Song from "../Song";
 import {
   addSong,
   getRecommendations,
   getTrackInfos,
 } from "../../services/Track";
-import Song from "../Song";
 import "./AddSong.scss"
 
 interface IAddSongProps {

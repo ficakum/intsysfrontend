@@ -1,12 +1,8 @@
 import { ChangeEvent, HTMLAttributes, useRef, useState } from "react";
 import cx from "classnames";
 import { useNavigate } from "react-router-dom";
-
-import "./SignIn.scss";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-import { signInUser } from "../../services/Auth";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -14,6 +10,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { signInUser } from "../../services/Auth";
+import "./SignIn.scss";
 
 interface ISignInProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -101,12 +99,13 @@ const SignIn = ({ className }: ISignInProps) => {
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <div className={cx("signin", className)}>
               <TextField
+                sx={{ backgroundColor: "rgba(93, 26, 155, 0.93)" }}
                 margin="normal"
                 required
                 fullWidth
                 label="Username"
-                name="email"
-                id="email"
+                name="username"
+                id="username"
                 autoFocus
                 className="signin-username"
                 ref={usernameInputRef}

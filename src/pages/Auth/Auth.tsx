@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { Button } from "@mui/material";
 import SignIn from "../../components/SignIn";
 import SignUp from "../../components/SignUp";
-import { Button } from "@mui/material";
-import "./Auth.scss"
 import Header from "../../components/Header";
+import "./Auth.scss"
 
 const Auth = () => {
   const [haveAccount, setHaveAccount] = useState<boolean>(true);

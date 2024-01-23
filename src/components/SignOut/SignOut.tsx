@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
 import { FC } from "react";
-import { clearSession } from "../../services/Auth";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import { clearSession } from "../../services/Auth";
 import "./SignOut.scss"
 
 const SignOut: FC = () => {
