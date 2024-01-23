@@ -14,7 +14,6 @@ interface IPlaySongProps {
 const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [song, setSong] = useState<{
-    songurl: string;
     id: string;
     infoId: string;
     name: string;
@@ -25,7 +24,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     instrumental_link: string;
     album_cover_link: string;
   }>({
-    songurl: "",
     id: "",
     infoId: "",
     name: "",
@@ -41,7 +39,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     text: string;
     start: number;
     end: number;
-  }>({ id: "", text: "", start: 0, end: 0 });
+  } | null>(null);
 
   useEffect(() => {
     const accessUserToken = getCookie(ACCESS_USER_TOKEN_KEY);
@@ -52,7 +50,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
     eventSource.addEventListener("CURRENT_TRACK", (e) => {
       const eventData = JSON.parse(e.data);
-      console.log((eventData.audio_link as string).replace("www", "dl"));
 
       setSong({
         ...eventData,
@@ -67,15 +64,15 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
         audioRef.current.currentTime = eventData.timeOffset / 1000;
       }
 
-      getLyrics(JSON.parse(e.data).externalId)
-        .then((respone: { segments: [] }) => {
+      getLyrics(JSON.parse(e.data).infoId)
+        .then((response: { segments: [] }) => {
           const lyrics: {
             id: string;
             text: string;
             start: number;
             end: number;
-          } = respone.segments.length
-            ? respone.segments.filter(
+          } | null = response.segments.length
+            ? response.segments.filter(
                 (segment: {
                   id: string;
                   text: string;
@@ -85,13 +82,46 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
                   segment.start < JSON.parse(e.data).timeOffset / 1000 &&
                   segment.end > JSON.parse(e.data).timeOffset / 1000
               )[0]
-            : { id: "", text: "No lyrics", start: 0, end: 0 };
-          setLyrics({
-            id: lyrics.id,
-            text: lyrics.text,
-            start: lyrics.start,
-            end: lyrics.end,
-          });
+            : null;
+          console.log(lyrics);
+          setLyrics(
+            lyrics
+              ? {
+                  id: (
+                    lyrics as {
+                      id: string;
+                      text: string;
+                      start: number;
+                      end: number;
+                    }
+                  ).id,
+                  text: (
+                    lyrics as {
+                      id: string;
+                      text: string;
+                      start: number;
+                      end: number;
+                    }
+                  ).text,
+                  start: (
+                    lyrics as {
+                      id: string;
+                      text: string;
+                      start: number;
+                      end: number;
+                    }
+                  ).start,
+                  end: (
+                    lyrics as {
+                      id: string;
+                      text: string;
+                      start: number;
+                      end: number;
+                    }
+                  ).end,
+                }
+              : null
+          );
         })
         .catch((error) => console.log(error));
     });
@@ -105,7 +135,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     // Handle the "ended" event to reset the songUrl or fetch the next song
     // This is where you can implement logic to play the next song if needed
     setSong({
-      songurl: "",
       id: "",
       infoId: "",
       name: "",
@@ -132,7 +161,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
           <source src={song.audio_link} type="audio/mpeg" />
         </audio>
       )}
-      <Lyrics text={lyrics && lyrics.text ? lyrics.text : "No lyrics"} />
+      {lyrics && lyrics.text && <Lyrics text={lyrics.text} />}
     </div>
   );
 };
