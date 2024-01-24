@@ -39,10 +39,13 @@ const SignIn = ({ className }: ISignInProps) => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
 
+
   const validateUsername = (username: string) => {
     const regex = /^[a-zA-Z0-9_-]+$/;
     const isValidUsername = regex.test(username);
     setIsUsernameInvalid(!isValidUsername);
+
+    return !isValidUsername
   };
 
   const validatePassword = (password: string) => {
@@ -50,6 +53,8 @@ const SignIn = ({ className }: ISignInProps) => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsPasswordInvalid(!isValidPassword);
+
+    return !isValidPassword
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -67,16 +72,28 @@ const SignIn = ({ className }: ISignInProps) => {
   };
 
   const onSignIn = async () => {
-    validateUsername(username);
-    validatePassword(password);
-
-    if (isUsernameInvalid || isPasswordInvalid) {
+    let err = validateUsername(username) 
+    err = validatePassword(password) || err;
+    
+    if (!username || !password || err) {
       return;
     }
 
     await signInUser(username, password)
       .then(() => navigate("/Welcome"))
-      .catch((error: unknown) => console.log(error));
+      .catch((error) => {
+        if (error.response.status === 404){
+          setIsUsernameInvalid(true);
+        }
+        else if(error.response.status === 400){
+          setIsPasswordInvalid(true);
+        }
+        else{
+          console.log(error);
+        }
+          
+      });
+ 
   };
 
   return (

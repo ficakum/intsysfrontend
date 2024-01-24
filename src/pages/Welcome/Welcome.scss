@@ -1,4 +1,4 @@
-.welcome{
+.welcome-div{
     background-image: url("../../../public/welcome-img.jpg");
     background-size: 50%;
     width: 100%;
@@ -12,8 +12,16 @@
     align-items: center;
 }
 
-.song-and-leave-btn{
+.song-and-leave-div{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.without-group-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    min-height: 100vh;
 }

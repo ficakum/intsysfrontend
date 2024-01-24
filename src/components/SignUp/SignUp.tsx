@@ -32,6 +32,7 @@ const SignUp = () => {
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const repeatPasswordInputRef = useRef<HTMLInputElement | null>(null);
   const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
   const [isRepeatPasswordInvalid, setIsRepeatPasswordInvalid] =
     useState<boolean>(false);
@@ -46,6 +47,16 @@ const SignUp = () => {
     const regex = /^[a-zA-Z0-9_-]+$/;
     const isValidUsername = regex.test(username);
     setIsUsernameInvalid(!isValidUsername);
+
+    return !isValidUsername;
+  };
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^@]+@[^@]+\.[^@]+$/;
+    const isValidEmail = regex.test(email);
+    setIsEmailInvalid(!isValidEmail);
+
+    return !isValidEmail;
   };
 
   const validatePassword = (password: string) => {
@@ -53,6 +64,8 @@ const SignUp = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsPasswordInvalid(!isValidPassword);
+
+    return !isValidPassword;
   };
 
   const validateRepeatPassword = (password: string) => {
@@ -60,6 +73,8 @@ const SignUp = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsRepeatPasswordInvalid(!isValidPassword);
+
+    return !isValidPassword;
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -91,23 +106,30 @@ const SignUp = () => {
   };
 
   const onSignUp = async () => {
-    validateUsername(username);
-    validatePassword(password);
-    validateRepeatPassword(repeatPassword);
+    let err = validateUsername(username) 
+    err =  validateEmail(email) || err
+    err =  validatePassword(password) || err
+    err =  validateRepeatPassword(repeatPassword) || err
 
-    if (isUsernameInvalid || isPasswordInvalid || isRepeatPasswordInvalid) {
+    if (!username || !email || !password || !repeatPassword || err) {
       return;
     }
 
     if (password !== repeatPassword) {
-      alert("Passwords do not match");
+      setIsRepeatPasswordInvalid(true)
       return;
     }
 
     await signUpUser(username, password, email)
       .then(() => navigate("/Welcome"))
-      .catch((error: unknown) => {
-        console.log(error);
+      .catch((error) => {
+        if(error.response.status === 400){
+          setIsUsernameInvalid(true);
+          setIsEmailInvalid(true);
+        }
+        else{
+          console.log(error);
+        }
       });
   };
 
@@ -164,6 +186,7 @@ const SignUp = () => {
                   ref={emailInputRef}
                   type="text"
                   placeholder="Enter email"
+                  error={isEmailInvalid}
                   onChange={handleEmailChange}
                 />
               </Grid>
