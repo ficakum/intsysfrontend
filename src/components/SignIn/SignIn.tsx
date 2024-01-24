@@ -39,6 +39,7 @@ const SignIn = ({ className }: ISignInProps) => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
 
+
   const validateUsername = (username: string) => {
     const regex = /^[a-zA-Z0-9_-]+$/;
     const isValidUsername = regex.test(username);
@@ -69,14 +70,26 @@ const SignIn = ({ className }: ISignInProps) => {
   const onSignIn = async () => {
     validateUsername(username);
     validatePassword(password);
-
-    if (isUsernameInvalid || isPasswordInvalid) {
+    
+    if (!username || !password || isUsernameInvalid || isPasswordInvalid) {
       return;
     }
 
     await signInUser(username, password)
       .then(() => navigate("/Welcome"))
-      .catch((error: unknown) => console.log(error));
+      .catch((error) => {
+        if (error.response.status === 404){
+          setIsUsernameInvalid(true);
+        }
+        else if(error.response.status === 400){
+          setIsPasswordInvalid(true);
+        }
+        else{
+          console.log(error);
+        }
+          
+      });
+ 
   };
 
   return (

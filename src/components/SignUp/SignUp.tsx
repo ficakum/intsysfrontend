@@ -32,6 +32,7 @@ const SignUp = () => {
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
   const repeatPasswordInputRef = useRef<HTMLInputElement | null>(null);
   const [isUsernameInvalid, setIsUsernameInvalid] = useState<boolean>(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState<boolean>(false);
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false);
   const [isRepeatPasswordInvalid, setIsRepeatPasswordInvalid] =
     useState<boolean>(false);
@@ -46,6 +47,12 @@ const SignUp = () => {
     const regex = /^[a-zA-Z0-9_-]+$/;
     const isValidUsername = regex.test(username);
     setIsUsernameInvalid(!isValidUsername);
+  };
+
+  const validateEmail = (email: string) => {
+    const regex = /^[^@]+@[^@]+\.[^@]+$/;
+    const isValidEmail = regex.test(email);
+    setIsEmailInvalid(!isValidEmail);
   };
 
   const validatePassword = (password: string) => {
@@ -92,10 +99,11 @@ const SignUp = () => {
 
   const onSignUp = async () => {
     validateUsername(username);
+    validateEmail(email);
     validatePassword(password);
     validateRepeatPassword(repeatPassword);
 
-    if (isUsernameInvalid || isPasswordInvalid || isRepeatPasswordInvalid) {
+    if (!username || !email || !password || !repeatPassword ||isUsernameInvalid || isEmailInvalid || isPasswordInvalid || isRepeatPasswordInvalid) {
       return;
     }
 
@@ -106,8 +114,14 @@ const SignUp = () => {
 
     await signUpUser(username, password, email)
       .then(() => navigate("/Welcome"))
-      .catch((error: unknown) => {
-        console.log(error);
+      .catch((error) => {
+        if(error.response.status === 400){
+          setIsUsernameInvalid(true);
+          setIsEmailInvalid(true);
+        }
+        else{
+          console.log(error);
+        }
       });
   };
 
@@ -164,6 +178,7 @@ const SignUp = () => {
                   ref={emailInputRef}
                   type="text"
                   placeholder="Enter email"
+                  error={isEmailInvalid}
                   onChange={handleEmailChange}
                 />
               </Grid>
