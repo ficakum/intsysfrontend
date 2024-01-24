@@ -5,6 +5,13 @@ export interface ResponseErrorData {
   message: string;
 }
 
+export interface ILyrics {
+  id: string;
+  text: string;
+  start: number;
+  end: number;
+}
+
 export interface IAuthUser {
   access_token: string;
   expires_in: number;
@@ -44,6 +51,30 @@ export interface ISong {
   author: string;
   genre: string;
 }
+
+export interface ISongEvent {
+  id: string;
+  infoId: string;
+  name: string;
+  timeOffset: number;
+  externalId: string;
+  audio_link: string;
+  vocals_link: string;
+  instrumental_link: string;
+  album_cover_link: string;
+}
+
+export const initialSongEvent = {
+  id: "",
+  infoId: "",
+  name: "",
+  timeOffset: 0,
+  externalId: "",
+  audio_link: "",
+  vocals_link: "",
+  instrumental_link: "",
+  album_cover_link: "",
+};
 
 export interface ITrack {
   group: string;

@@ -4,6 +4,7 @@ import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
 import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
 import "./PlaySong.scss";
+import { ILyrics, ISongEvent, initialSongEvent } from "../../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -13,33 +14,8 @@ interface IPlaySongProps {
 
 const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [song, setSong] = useState<{
-    id: string;
-    infoId: string;
-    name: string;
-    timeOffset: number;
-    externalId: string;
-    audio_link: string;
-    vocals_link: string;
-    instrumental_link: string;
-    album_cover_link: string;
-  }>({
-    id: "",
-    infoId: "",
-    name: "",
-    timeOffset: 0,
-    externalId: "",
-    audio_link: "",
-    vocals_link: "",
-    instrumental_link: "",
-    album_cover_link: "",
-  });
-  const [lyrics, setLyrics] = useState<{
-    id: string;
-    text: string;
-    start: number;
-    end: number;
-  } | null>(null);
+  const [song, setSong] = useState<ISongEvent>(initialSongEvent);
+  const [lyrics, setLyrics] = useState<ILyrics | null>(null);
 
   useEffect(() => {
     const accessUserToken = getCookie(ACCESS_USER_TOKEN_KEY);
@@ -66,59 +42,20 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
       getLyrics(JSON.parse(e.data).infoId)
         .then((response: { segments: [] }) => {
-          const lyrics: {
-            id: string;
-            text: string;
-            start: number;
-            end: number;
-          } | null = response.segments.length
+          const lyrics: ILyrics | null = response.segments.length
             ? response.segments.filter(
-                (segment: {
-                  id: string;
-                  text: string;
-                  start: number;
-                  end: number;
-                }) =>
+                (segment: ILyrics) =>
                   segment.start < JSON.parse(e.data).timeOffset / 1000 &&
                   segment.end > JSON.parse(e.data).timeOffset / 1000
               )[0]
             : null;
-          console.log(lyrics);
           setLyrics(
             lyrics
               ? {
-                  id: (
-                    lyrics as {
-                      id: string;
-                      text: string;
-                      start: number;
-                      end: number;
-                    }
-                  ).id,
-                  text: (
-                    lyrics as {
-                      id: string;
-                      text: string;
-                      start: number;
-                      end: number;
-                    }
-                  ).text,
-                  start: (
-                    lyrics as {
-                      id: string;
-                      text: string;
-                      start: number;
-                      end: number;
-                    }
-                  ).start,
-                  end: (
-                    lyrics as {
-                      id: string;
-                      text: string;
-                      start: number;
-                      end: number;
-                    }
-                  ).end,
+                  id: (lyrics as ILyrics).id,
+                  text: (lyrics as ILyrics).text,
+                  start: (lyrics as ILyrics).start,
+                  end: (lyrics as ILyrics).end,
                 }
               : null
           );
@@ -132,19 +69,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   }, []);
 
   const handleAudioEnded = () => {
-    // Handle the "ended" event to reset the songUrl or fetch the next song
-    // This is where you can implement logic to play the next song if needed
-    setSong({
-      id: "",
-      infoId: "",
-      name: "",
-      timeOffset: 0,
-      externalId: "",
-      audio_link: "",
-      vocals_link: "",
-      instrumental_link: "",
-      album_cover_link: "",
-    });
+    setSong(initialSongEvent);
   };
 
   return (

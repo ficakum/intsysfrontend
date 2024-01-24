@@ -2,8 +2,8 @@ import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import { IGroup, IUser } from "../../models";
 import Group from "../Group/Group";
-import { getGroups } from "../../services/Group";
-import "./Groups.scss"
+import { getGroupsRecommendation } from "../../services/Group";
+import "./Groups.scss";
 
 interface IGroupsProps {
   userId: string;
@@ -13,7 +13,7 @@ const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
   const [groups, setGroups] = useState<Array<IGroup>>([]);
 
   useEffect(() => {
-    getGroups(userId)
+    getGroupsRecommendation(userId)
       .then((groupsPaginated) => {
         setGroups(groupsPaginated);
 

@@ -8,7 +8,7 @@ const getGroupsUrl = `${aiUrl}group_recommendations/`;
 const predictGroupClusterUrl = `${aiUrl}predict_group_cluster/`;
 const createGroupsUrl = `${apiUrl}v1/groups/`;
 
-export const getGroups = async (userId: string) => {
+export const getGroupsRecommendation = async (userId: string) => {
   const response = await Api.get(`${getGroupsUrl}${userId}`);
 
   return response.data;
