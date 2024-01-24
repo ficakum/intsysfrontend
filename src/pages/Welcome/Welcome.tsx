@@ -7,7 +7,8 @@ import CreateGroup from "../../components/CreateGroup";
 import LeaveGroup from "../../components/LeaveGroup";
 import Header from "../../components/Header";
 import { getLoggedInUser } from "../../services/Auth";
-import "./Welcome.scss"
+import "./Welcome.scss";
+import GroupsBackend from "../../components/GroupsBackend";
 
 const Welcome = () => {
   const [user, setUser] = useState<IUser>(initialUser);
@@ -33,7 +34,7 @@ const Welcome = () => {
       <Header showMenu="true" />
       {user.group ? (
         <div className="in-group-div">
-          <div className="song-and-leave-div"> 
+          <div className="song-and-leave-div">
             <PlaySong groupId={user.group} />
             <LeaveGroup groupId={user.group} setUser={setUser} />
           </div>
@@ -43,6 +44,7 @@ const Welcome = () => {
         <div className="without-group-div">
           <CreateGroup setUser={setUser} />
           <Groups setUser={setUser} userId={user._id} />
+          <GroupsBackend setUser={setUser} />
         </div>
       )}
     </div>

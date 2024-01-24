@@ -5,19 +5,19 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import { IGroup, IUser } from "../../models";
+import { IGroupBackend, IUser } from "../../models";
 import { joinGroup } from "../../services/Group";
 import { getLoggedInUser } from "../../services/Auth";
-import "./Group.scss";
+import "./GroupBackend.scss";
 
 interface IGroupProps {
-  group: IGroup;
+  group: IGroupBackend;
   setUser: Dispatch<SetStateAction<IUser>>;
 }
 
-const Group: FC<IGroupProps> = ({ group, setUser }) => {
+const GroupBackend: FC<IGroupProps> = ({ group, setUser }) => {
   const onJoinGroup = () => {
-    joinGroup(group._id.$oid)
+    joinGroup(group._id)
       .then(() => {
         getLoggedInUser()
           .then((user: IUser) => {
@@ -54,4 +54,4 @@ const Group: FC<IGroupProps> = ({ group, setUser }) => {
   );
 };
 
-export default Group;
+export default GroupBackend;

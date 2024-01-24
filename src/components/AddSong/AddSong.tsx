@@ -15,7 +15,8 @@ import {
   getRecommendations,
   getTrackInfos,
 } from "../../services/Track";
-import "./AddSong.scss"
+import "./AddSong.scss";
+import { predictGroupCluster } from "../../services/Group";
 
 interface IAddSongProps {
   groupId: string;
@@ -88,11 +89,13 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   };
 
   const onAdd = (song: ISong) => {
-    addSong({ trackInformation: song._id, group: groupId }).catch(
-      (error: unknown) => {
+    addSong({ trackInformation: song._id, group: groupId })
+      .then(() => {
+        predictGroupCluster(groupId);
+      })
+      .catch((error: unknown) => {
         console.log(error);
-      }
-    );
+      });
 
     getRecommendations(groupId)
       .then((response: Array<IRecommendedSong>) => {
@@ -120,14 +123,17 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
           placeholder="Enter author"
           onChange={handleSearchAuthorChange}
         />
-        <Button className="search-song-btn" onClick={() => onSearch()}>Search</Button>
+        <Button className="search-song-btn" onClick={() => onSearch()}>
+          Search
+        </Button>
       </div>
       <div className="songs">
         {songs.map((song) => (
           <Song key={song._id} song={song} onAdd={onAdd} />
         ))}
       </div>
-      <Pagination className="pagination"
+      <Pagination
+        className="pagination"
         count={totalPages}
         page={currentPage}
         onChange={handlePageChange}

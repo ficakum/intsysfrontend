@@ -37,7 +37,7 @@ const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
         Recommended groups
       </Typography>
       <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
+        <CssBaseline />
         <Container sx={{ py: 6 }} maxWidth="md">
           <Grid container spacing={4}>
             {groups.map((group, key) => (
@@ -45,7 +45,7 @@ const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
             ))}
           </Grid>
         </Container>
-    </ThemeProvider>
+      </ThemeProvider>
     </div>
   );
 };

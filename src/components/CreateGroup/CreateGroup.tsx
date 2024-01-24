@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { IUser } from "../../models";
 import { createGroup } from "../../services/Group";
 import { getLoggedInUser } from "../../services/Auth";
-import "./CreateGroup.scss"
+import "./CreateGroup.scss";
 
 const theme = createTheme({
   palette: {
@@ -37,22 +37,22 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
   const [groupName, setGroupName] = useState<string>("");
   const [maxMembers, setMaxMembers] = useState<number>(0);
   const [isGroupNameInvalid, setIsGroupNameInvalid] = useState<boolean>(false);
-  const [isMaxMembersInvalid, setIsMaxMembersInvalid] = useState<boolean>(false);
+  const [isMaxMembersInvalid, setIsMaxMembersInvalid] =
+    useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-
 
   const validateGroupName = (groupName: string) => {
     const isValidGroupName = groupName;
     setIsGroupNameInvalid(!isValidGroupName);
 
-    return !isValidGroupName
+    return !isValidGroupName;
   };
 
   const validateMaxMembers = (maxMembers: number) => {
     const isValidMaxMembers = maxMembers >= 0;
     setIsMaxMembersInvalid(!isValidMaxMembers);
 
-    return !isValidMaxMembers
+    return !isValidMaxMembers;
   };
 
   const handleGroupNameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,22 +62,19 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
 
   const handleMaxMembersChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newMaxMembers = event.target.value;
-    if (newMaxMembers != ""){
+    if (newMaxMembers != "") {
       setMaxMembers(Number.parseInt(newMaxMembers));
-    } 
-    else
-    {
+    } else {
       setMaxMembers(0);
     }
-    
   };
 
   const onCreateGroup = () => {
     let err = validateGroupName(groupName);
     err = validateMaxMembers(maxMembers) || err;
 
-    if (err){
-      return
+    if (err) {
+      return;
     }
 
     if (maxMembers) {
@@ -86,7 +83,6 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
           getLoggedInUser()
             .then((user: IUser) => {
               setUser(user);
-              console.log(user);
 
               return;
             })
@@ -99,7 +95,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
         });
     } else {
       createGroup({ groupName, membersNum: 1 })
-        .then((response: unknown) => {
+        .then(() => {
           getLoggedInUser()
             .then((user: IUser) => {
               setUser(user);
@@ -122,7 +118,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <div className="create-group-div">
             <TextField
-              sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)"}}
+              sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
               margin="normal"
               required
               autoFocus
@@ -141,12 +137,13 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
               ref={maxMembersInputRef}
               label="Max members"
               type="number"
-              InputProps={{ inputProps: { min: 1} }}
+              InputProps={{ inputProps: { min: 1 } }}
               placeholder="Enter max members"
               error={isMaxMembersInvalid}
               onChange={handleMaxMembersChange}
             />
-            <Button className="create-group-btn"
+            <Button
+              className="create-group-btn"
               variant="contained"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -163,7 +160,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
               }} */}
               Create Group
             </Button>
-            </div>
+          </div>
         </Box>
       </Container>
     </ThemeProvider>

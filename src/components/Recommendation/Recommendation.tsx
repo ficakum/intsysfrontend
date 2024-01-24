@@ -2,7 +2,8 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { IRecommendedSong } from "../../models";
 import SongRecommend from "../SongRecommend";
 import { addSong, getRecommendations } from "../../services/Track";
-import "./Recommendation.scss"
+import "./Recommendation.scss";
+import { predictGroupCluster } from "../../services/Group";
 
 interface IRecommendationsProps {
   recommendations: IRecommendedSong[];
@@ -16,11 +17,13 @@ const Recommendation: FC<IRecommendationsProps> = ({
   groupId,
 }) => {
   const onAdd = (song: IRecommendedSong) => {
-    addSong({ trackInformation: song._id.$oid, group: groupId }).catch(
-      (error: unknown) => {
+    addSong({ trackInformation: song._id.$oid, group: groupId })
+      .then(() => {
+        predictGroupCluster(groupId);
+      })
+      .catch((error: unknown) => {
         console.log(error);
-      }
-    );
+      });
 
     getRecommendations(groupId)
       .then((response: Array<IRecommendedSong>) => {

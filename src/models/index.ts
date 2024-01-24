@@ -89,6 +89,14 @@ export interface IGroup {
   membersNum: number;
 }
 
+export interface IGroupBackend {
+  _id: string;
+  groupName: string;
+  currentTrack: string;
+  maxMembers: number;
+  membersNum: number;
+}
+
 export interface IProps {
   children: ReactNode;
 }
