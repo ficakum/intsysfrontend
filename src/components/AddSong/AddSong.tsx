@@ -114,11 +114,11 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   };
 
   return (
-    <div className="all-songs">
+    <div className="all-songs-div">
       <Typography variant="h4" component="h2" className="title">
           All songs
       </Typography>
-      <div className="search-div">
+      <div className="song-search-div">
         <TextField
           className="song-name"
           ref={searchNameInputRef}

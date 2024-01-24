@@ -8,18 +8,18 @@ import {
   useState,
 } from "react";
 import { AxiosError } from "axios";
-// import Typography from "@mui/material/Typography";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import Grid from "@mui/material/Grid";
-// import Container from "@mui/material/Container";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Button, Pagination, TextField } from "@mui/material";
 import { IGroupBackend, IUser } from "../../models";
 import GroupBackend from "../GroupBackend/GroupBackend";
 import { getGroups } from "../../services/Group";
 import "./GroupsBackend.scss";
-import { Button, Pagination, TextField } from "@mui/material";
 
-// const defaultTheme = createTheme();
+const defaultTheme = createTheme();
 
 interface IGroupsProps {
   setUser: Dispatch<SetStateAction<IUser>>;
@@ -52,7 +52,7 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
   }, []);
 
   const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
-    getGroups(value, 10)
+    getGroups(value, 9)
       .then(
         (response: {
           items: IGroupBackend[];
@@ -75,7 +75,7 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
   };
 
   const onSearch = () => {
-    getGroups(1, 10, searchName)
+    getGroups(1, 9, searchName)
       .then(
         (response: {
           items: IGroupBackend[];
@@ -91,22 +91,34 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
   };
 
   return (
-    <div className="groups-div">
-      <div className="search-div">
+    <div className="all-groups-div">
+      <Typography variant="h4" component="h2" className="title">
+          All groups
+      </Typography>
+      <div className="group-search-div">
         <TextField
-          className="song-name"
+          className="group-name"
           ref={searchNameInputRef}
           type="text"
-          placeholder="Enter song name"
+          placeholder="Enter group name"
           onChange={handleSearchNameChange}
         />
-        <Button className="search-song-btn" onClick={() => onSearch()}>
+        <Button className="search-group-btn" onClick={() => onSearch()}>
           Search
         </Button>
       </div>
-      {groups.map((group, key) => (
-        <GroupBackend key={key} group={group} setUser={setUser} />
-      ))}
+      <div className="all-groups-div">
+        <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+          <Container sx={{ py: 6 }} maxWidth="md">
+            <Grid container spacing={4}>
+              {groups.map((group, key) => (
+                <GroupBackend key={key} group={group} setUser={setUser} />
+              ))}
+            </Grid>
+          </Container>
+        </ThemeProvider>
+      </div>
       <Pagination
         className="pagination"
         count={totalPages}
