@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { getCookie } from "typescript-cookie";
 import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
+import { ILyrics, ISongEvent, initialSongEvent } from "../../models";
 import Lyrics from "../Lyrics";
 import { getLyrics } from "../../services/Track";
 import "./PlaySong.scss";
-import { ILyrics, ISongEvent, initialSongEvent } from "../../models";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -85,7 +85,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   };
 
   return (
-    <div>
+    <div className="curr-song-div">
       <label>
         {/* Use the state variable to set the default checked state */}
         <input

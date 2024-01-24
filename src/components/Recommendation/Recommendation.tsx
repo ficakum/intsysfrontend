@@ -1,9 +1,16 @@
 import { Dispatch, FC, SetStateAction } from "react";
+import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { IRecommendedSong } from "../../models";
 import SongRecommend from "../SongRecommend";
 import { addSong, getRecommendations } from "../../services/Track";
-import "./Recommendation.scss";
 import { predictGroupCluster } from "../../services/Group";
+import "./Recommendation.scss";
+
+const defaultTheme = createTheme();
 
 interface IRecommendationsProps {
   recommendations: IRecommendedSong[];
@@ -35,10 +42,20 @@ const Recommendation: FC<IRecommendationsProps> = ({
   };
 
   return (
-    <div className="songs">
-      {recommendations.map((song) => (
-        <SongRecommend key={song._id.$oid} song={song} onAdd={onAdd} />
-      ))}
+    <div className="songs-div">
+      <Typography variant="h4" component="h2" className="title">
+        Recommended songs
+      </Typography>
+      <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+        <Container sx={{ py: 6 }} maxWidth="md">
+          <Grid container spacing={4}>
+            {recommendations.map((song) => (
+              <SongRecommend key={song._id.$oid} song={song} onAdd={onAdd} />
+            ))}
+          </Grid>
+        </Container>
+      </ThemeProvider>
     </div>
   );
 };

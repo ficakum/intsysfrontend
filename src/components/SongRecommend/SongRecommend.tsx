@@ -1,5 +1,11 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Button } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
 import { IRecommendedSong } from "../../models";
 import "./SongRecommend.scss"
 
@@ -8,34 +14,33 @@ interface ISongRecommendProps {
   onAdd: (song: IRecommendedSong) => void;
 }
 const Song: FC<ISongRecommendProps> = ({ song, onAdd }) => {
-  const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
-    <div className="song">
-      <div className="song-info-img">
-        <div className="song-paragr">
-          <p className="song-info">Name: {song.name}</p>
-          <p className="song-info">Author: {song.author}</p>
-          <p className="song-info">Genre: {song.genre}</p>
-        </div>
-        {/* <img className="song-info-img" src="https://dl.dropbox.com/scl/fi/nzfcowp3t3y2a5hu71il1/cover_img.jpg?rlkey=3tsa8iqzcr2pzmhctu1gg317i&dl=0" /> */}
-      </div>
-      <Button className="add-song-btn"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={() => setIsHovered(true)}
-        onTouchEnd={() => setIsHovered(false)}
-        onClick={() => onAdd(song)}>
-        {/* style={{
-          padding: "15px 32px 15px 32px",
-          border: isHovered ? "" : "2px solid #ffffff",
-          color: "#ffffff",
-          boxShadow: isHovered
-            ? "0px 4px 15px 0px #000000, 0px -4px 15px 0px #ffffff"
-            : "",
-        }} */}
-        Add Song
-      </Button>
-    </div>
+    <Grid item xs={4}> 
+        <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+          <CardMedia
+              component="div"
+              sx={{
+                // 16:9
+                pt: "56.25%",
+              }}
+              image="https://dl.dropbox.com/scl/fi/nzfcowp3t3y2a5hu71il1/cover_img.jpg?rlkey=3tsa8iqzcr2pzmhctu1gg317i&dl=0"
+          />
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {song.name}
+            </Typography>
+            <Typography>
+              Artist: {song.author}
+            </Typography>
+            <Typography>
+            Genre: {song.genre}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="large" onClick={() => onAdd(song)} className="add-song-btn">Add song</Button>
+          </CardActions>
+        </Card>
+    </Grid>
   );
 };
 

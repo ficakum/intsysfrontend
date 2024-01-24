@@ -24,14 +24,13 @@ const LeaveGroup: FC<ILeaveGroupProps> = ({ groupId, setUser }) => {
             console.log(error);
           });
 
-        alert("Successfully left the group");
       })
       .catch((error: unknown) => console.log(error));
   };
 
   return (
     <div>
-      <Button className="leave-btn" onClick={onLeaveGroup}>Leave current group</Button>
+      <Button className="leave-btn" onClick={onLeaveGroup}>Leave group</Button>
     </div>
   );
 };
