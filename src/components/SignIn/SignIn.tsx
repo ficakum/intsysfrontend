@@ -44,6 +44,8 @@ const SignIn = ({ className }: ISignInProps) => {
     const regex = /^[a-zA-Z0-9_-]+$/;
     const isValidUsername = regex.test(username);
     setIsUsernameInvalid(!isValidUsername);
+
+    return !isValidUsername
   };
 
   const validatePassword = (password: string) => {
@@ -51,6 +53,8 @@ const SignIn = ({ className }: ISignInProps) => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsPasswordInvalid(!isValidPassword);
+
+    return !isValidPassword
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -68,10 +72,10 @@ const SignIn = ({ className }: ISignInProps) => {
   };
 
   const onSignIn = async () => {
-    validateUsername(username);
-    validatePassword(password);
+    let err = validateUsername(username) 
+    err = validatePassword(password) || err;
     
-    if (!username || !password || isUsernameInvalid || isPasswordInvalid) {
+    if (!username || !password || err) {
       return;
     }
 

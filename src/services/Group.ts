@@ -22,7 +22,7 @@ export const predictGroupCluster = async (groupId: string) => {
 export const createGroup = async (group: Partial<IGroup>) => {
   const response = await Api.post(`${createGroupsUrl}`, group);
 
-  predictGroupCluster(response.data._id);
+  // predictGroupCluster(response.data._id);
 
   return response.data;
 };

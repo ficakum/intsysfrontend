@@ -52,18 +52,18 @@ const Welcome = () => {
   }
 
   return (
-    <div className="welcome">
+    <div className="welcome-div">
       <Header showMenu="true" />
       {user.group ? (
         <div className="in-group-div">
-          <div className="song-and-leave-btn"> 
+          <div className="song-and-leave-div"> 
             <PlaySong groupId={user.group} />
             <LeaveGroup groupId={user.group} setUser={setUser} />
           </div>
           <SongsSection groupId={user.group} />
         </div>
       ) : (
-        <div>
+        <div className="without-group-div">
           <CreateGroup setUser={setUser} />
           <Groups setUser={setUser} userId={user._id} />
         </div>

@@ -47,12 +47,16 @@ const SignUp = () => {
     const regex = /^[a-zA-Z0-9_-]+$/;
     const isValidUsername = regex.test(username);
     setIsUsernameInvalid(!isValidUsername);
+
+    return !isValidUsername;
   };
 
   const validateEmail = (email: string) => {
     const regex = /^[^@]+@[^@]+\.[^@]+$/;
     const isValidEmail = regex.test(email);
     setIsEmailInvalid(!isValidEmail);
+
+    return !isValidEmail;
   };
 
   const validatePassword = (password: string) => {
@@ -60,6 +64,8 @@ const SignUp = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsPasswordInvalid(!isValidPassword);
+
+    return !isValidPassword;
   };
 
   const validateRepeatPassword = (password: string) => {
@@ -67,6 +73,8 @@ const SignUp = () => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/;
     const isValidPassword = regex.test(password);
     setIsRepeatPasswordInvalid(!isValidPassword);
+
+    return !isValidPassword;
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -98,17 +106,17 @@ const SignUp = () => {
   };
 
   const onSignUp = async () => {
-    validateUsername(username);
-    validateEmail(email);
-    validatePassword(password);
-    validateRepeatPassword(repeatPassword);
+    let err = validateUsername(username) 
+    err =  validateEmail(email) || err
+    err =  validatePassword(password) || err
+    err =  validateRepeatPassword(repeatPassword) || err
 
-    if (!username || !email || !password || !repeatPassword ||isUsernameInvalid || isEmailInvalid || isPasswordInvalid || isRepeatPasswordInvalid) {
+    if (!username || !email || !password || !repeatPassword || err) {
       return;
     }
 
     if (password !== repeatPassword) {
-      alert("Passwords do not match");
+      setIsRepeatPasswordInvalid(true)
       return;
     }
 

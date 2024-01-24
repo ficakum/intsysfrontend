@@ -25,7 +25,7 @@ const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
   }, []);
 
   return (
-    <div className="groups">
+    <div className="groups-div">
       {groups.map((group, key) => (
         <Group key={key} group={group} setUser={setUser} />
       ))}
