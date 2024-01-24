@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import { getCookie } from "typescript-cookie";
 import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
 import Lyrics from "../Lyrics";
@@ -30,6 +30,10 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
       setSong({
         ...eventData,
         audio_link: (eventData.audio_link as string).replace("www.", "dl."),
+        instrumental_link: (eventData.instrumental_link as string).replace(
+          "www.",
+          "dl."
+        ),
         album_cover_link: (eventData.album_cover_link as string).replace(
           "www.",
           "dl."
@@ -72,18 +76,44 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     setSong(initialSongEvent);
   };
 
+  // State variable to manage the checkbox state
+  const [isChecked, setIsChecked] = useState(true);
+
+  // Function to handle checkbox changes
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(event.target.checked);
+  };
+
   return (
     <div>
+      <label>
+        {/* Use the state variable to set the default checked state */}
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        {isChecked ? "Listen to music" : "Play karaoke"}
+      </label>
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
-      {song.audio_link && (
+      {!isChecked && song.audio_link && (
         <audio
           key={song.audio_link}
           controls
           ref={audioRef}
           onEnded={handleAudioEnded}>
           <source src={song.audio_link} type="audio/mpeg" />
+        </audio>
+      )}
+      {isChecked && song.instrumental_link && (
+        <audio
+          key={song.instrumental_link}
+          controls
+          ref={audioRef}
+          onEnded={handleAudioEnded}>
+          <source src={song.instrumental_link} type="audio/mpeg" />
         </audio>
       )}
       {lyrics && lyrics.text && <Lyrics text={lyrics.text} />}

@@ -23,7 +23,7 @@ const Lyrics: FC<ILyricsProps> = ({ text }) => {
           checked={isChecked}
           onChange={handleCheckboxChange}
         />
-        Checkbox
+        {isChecked ? "Don't want to see lyrics" : "See lyrics?"}
       </label>
     </div>
   );
