@@ -30,20 +30,15 @@ export const getGroups = async (
 
 export const getGroupsRecommendation = async (userId: string) => {
   const response = await Api.get(`${getGroupsRecommendationUrl}${userId}`);
-
   return response.data;
 };
 
 export const predictGroupCluster = async (groupId: string) => {
-  const response = await Api.put(`${predictGroupClusterUrl}${groupId}`);
-  console.log(response);
+  await Api.put(`${predictGroupClusterUrl}${groupId}`);
 };
 
 export const createGroup = async (group: Partial<IGroup>) => {
   const response = await Api.post(`${createGroupsUrl}`, group);
-
-  // predictGroupCluster(response.data._id);
-
   return response.data;
 };
 

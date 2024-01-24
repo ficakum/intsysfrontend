@@ -8,6 +8,11 @@ import {
   useState,
 } from "react";
 import { Button, Pagination, TextField } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { IRecommendedSong, ISong } from "../../models";
 import Song from "../Song";
 import {
@@ -15,8 +20,10 @@ import {
   getRecommendations,
   getTrackInfos,
 } from "../../services/Track";
-import "./AddSong.scss";
 import { predictGroupCluster } from "../../services/Group";
+import "./AddSong.scss";
+
+const defaultTheme = createTheme();
 
 interface IAddSongProps {
   groupId: string;
@@ -43,7 +50,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   };
 
   useEffect(() => {
-    getTrackInfos(1, 10)
+    getTrackInfos(1, 9)
       .then(
         (response: {
           items: ISong[];
@@ -61,7 +68,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   }, []);
 
   const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
-    getTrackInfos(value, 10)
+    getTrackInfos(value, 9)
       .then(
         (response: {
           items: ISong[];
@@ -79,7 +86,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
   };
 
   const onSearch = () => {
-    getTrackInfos(1, 10, searchName, searchAuthor)
+    getTrackInfos(1, 9, searchName, searchAuthor)
       .then((response: ISong[]) => {
         setSongs(response);
       })
@@ -108,6 +115,9 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
 
   return (
     <div className="all-songs">
+      <Typography variant="h4" component="h2" className="title">
+          All songs
+      </Typography>
       <div className="search-div">
         <TextField
           className="song-name"
@@ -127,10 +137,17 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
           Search
         </Button>
       </div>
-      <div className="songs">
-        {songs.map((song) => (
-          <Song key={song._id} song={song} onAdd={onAdd} />
-        ))}
+      <div className="all-songs-div">
+        <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+          <Container sx={{ py: 6 }} maxWidth="md">
+            <Grid container spacing={4}>
+              {songs.map((song) => (
+                <Song key={song._id} song={song} onAdd={onAdd} />
+              ))}
+            </Grid>
+          </Container>
+        </ThemeProvider>
       </div>
       <Pagination
         className="pagination"
