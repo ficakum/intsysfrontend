@@ -91,17 +91,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
   return (
     <div className="curr-song-div">
-      {song.instrumental_link && (
-        <label className="cb-label">
-          {/* Use the state variable to set the default checked state */}
-          <input
-            type="checkbox"
-            checked={isCheckedKaraoke}
-            onChange={handleKaraokeCheckboxChange}
-          />
-          Play karaoke
-        </label>
-      )}
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
@@ -127,16 +116,29 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
           <source src={song.instrumental_link} type="audio/mpeg" />
         </audio>
       )}
-      {song.instrumental_link && 
-        <label className="cb-label">
-          {/* Use the state variable to set the default checked state */}
-          <input
-            type="checkbox"
-            checked={isCheckedLyrics}
-            onChange={handleLyricsCheckboxChange}
-          />
-          See lyrics?
+      <div className="check-btns">
+        {song.instrumental_link && (
+          <label className="cb-label">
+            {/* Use the state variable to set the default checked state */}
+            <input
+              type="checkbox"
+              checked={isCheckedKaraoke}
+              onChange={handleKaraokeCheckboxChange}
+            />
+            Play karaoke
+          </label>
+        )}
+        {song.instrumental_link && 
+          <label className="cb-label">
+            {/* Use the state variable to set the default checked state */}
+            <input
+              type="checkbox"
+              checked={isCheckedLyrics}
+              onChange={handleLyricsCheckboxChange}
+            />
+            See lyrics?
         </label>}
+      </div>
       {lyrics && lyrics.text && isCheckedLyrics && <Lyrics text={lyrics.text} />}
     </div>
   );
