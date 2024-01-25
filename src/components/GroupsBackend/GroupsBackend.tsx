@@ -14,12 +14,24 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Button, Pagination, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
 import { IGroupBackend, IUser } from "../../models";
 import GroupBackend from "../GroupBackend/GroupBackend";
 import { getGroups } from "../../services/Group";
 import "./GroupsBackend.scss";
 
 const defaultTheme = createTheme();
+const searchTheme = createTheme({
+  palette: {
+    text: {
+      primary: "#FFFFFF",
+      secondary: "#FFFFFF",
+    },
+    primary: {
+      main: "#FFFFFF",
+    },
+  },
+});
 
 interface IGroupsProps {
   setUser: Dispatch<SetStateAction<IUser>>;
@@ -95,18 +107,26 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
       <Typography variant="h4" component="h2" className="title">
           All groups
       </Typography>
-      <div className="group-search-div">
-        <TextField
-          className="group-name"
-          ref={searchNameInputRef}
-          type="text"
-          placeholder="Enter group name"
-          onChange={handleSearchNameChange}
-        />
-        <Button className="search-group-btn" onClick={() => onSearch()}>
-          Search
-        </Button>
-      </div>
+      <ThemeProvider theme={searchTheme}>
+        <Container component="main">
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <div className="group-search-div">
+              <TextField
+                sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+                margin="normal"
+                className="group-name"
+                ref={searchNameInputRef}
+                type="text"
+                placeholder="Enter group name"
+                onChange={handleSearchNameChange}
+              />
+              <Button className="search-group-btn" onClick={() => onSearch()}>
+                Search
+              </Button>
+            </div>
+          </Box>
+        </Container>
+      </ThemeProvider>
       <div className="all-groups-div">
         <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
@@ -125,7 +145,7 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
         page={currentPage}
         onChange={handlePageChange}
         color="primary"
-        shape="rounded"
+        size="large"
       />
     </div>
   );

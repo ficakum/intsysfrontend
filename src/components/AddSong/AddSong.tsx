@@ -13,6 +13,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 import { IRecommendedSong, ISong } from "../../models";
 import Song from "../Song";
 import {
@@ -24,6 +25,17 @@ import { predictGroupCluster } from "../../services/Group";
 import "./AddSong.scss";
 
 const defaultTheme = createTheme();
+const searchTheme = createTheme({
+  palette: {
+    text: {
+      primary: "#FFFFFF",
+      secondary: "#FFFFFF",
+    },
+    primary: {
+      main: "#FFFFFF",
+    },
+  },
+});
 
 interface IAddSongProps {
   groupId: string;
@@ -118,25 +130,35 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
       <Typography variant="h4" component="h2" className="title">
           All songs
       </Typography>
-      <div className="song-search-div">
-        <TextField
-          className="song-name"
-          ref={searchNameInputRef}
-          type="text"
-          placeholder="Enter song name"
-          onChange={handleSearchNameChange}
-        />
-        <TextField
-          className="song-author"
-          ref={searchAuthorInputRef}
-          type="text"
-          placeholder="Enter author"
-          onChange={handleSearchAuthorChange}
-        />
-        <Button className="search-song-btn" onClick={() => onSearch()}>
-          Search
-        </Button>
-      </div>
+      <ThemeProvider theme={searchTheme}>
+        <Container component="main">
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <div className="song-search-div">
+              <TextField
+                sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+                margin="normal"
+                className="song-name"
+                ref={searchNameInputRef}
+                type="text"
+                placeholder="Enter song name"
+                onChange={handleSearchNameChange}
+              />
+              <TextField
+                sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+                margin="normal"
+                className="song-author"
+                ref={searchAuthorInputRef}
+                type="text"
+                placeholder="Enter author"
+                onChange={handleSearchAuthorChange}
+              />
+              <Button className="search-song-btn" onClick={() => onSearch()}>
+                Search
+              </Button>
+            </div>
+          </Box>
+        </Container>
+      </ThemeProvider>
       <div className="all-songs-div">
         <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
@@ -155,7 +177,7 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
         page={currentPage}
         onChange={handlePageChange}
         color="primary"
-        shape="rounded"
+        size="large"
       />
     </div>
   );

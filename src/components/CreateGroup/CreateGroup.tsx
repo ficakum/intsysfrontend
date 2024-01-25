@@ -39,7 +39,6 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
   const [isGroupNameInvalid, setIsGroupNameInvalid] = useState<boolean>(false);
   const [isMaxMembersInvalid, setIsMaxMembersInvalid] =
     useState<boolean>(false);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const validateGroupName = (groupName: string) => {
     const isValidGroupName = groupName;
@@ -145,19 +144,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
             <Button
               className="create-group-btn"
               variant="contained"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onTouchStart={() => setIsHovered(true)}
-              onTouchEnd={() => setIsHovered(false)}
               onClick={() => onCreateGroup()}>
-              {/* style={{
-                padding: "15px 32px 15px 32px",
-                border: isHovered ? "" : "2px solid #4B4B4B",
-                color: "#4B4B4B",
-                boxShadow: isHovered
-                  ? "0px 4px 15px 0px #5D5FEF66, 0px -4px 15px 0px #EB000033"
-                  : "",
-              }} */}
               Create Group
             </Button>
           </div>
