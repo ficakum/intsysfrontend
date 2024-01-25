@@ -77,7 +77,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   };
 
   // State variable to manage the checkbox state
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   // Function to handle checkbox changes
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -86,22 +86,26 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
   return (
     <div className="curr-song-div">
-      <label>
-        {/* Use the state variable to set the default checked state */}
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
-        {isChecked ? "Listen to music" : "Play karaoke"}
-      </label>
+      {song.instrumental_link && (
+        <label>
+          {/* Use the state variable to set the default checked state */}
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          />
+          Play karaoke
+        </label>
+      )}
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
       {!isChecked && song.audio_link && (
-        <audio
+        <audio 
           key={song.audio_link}
+          controlsList="nodownload noplaybackrate"
           controls
+          autoPlay
           ref={audioRef}
           onEnded={handleAudioEnded}>
           <source src={song.audio_link} type="audio/mpeg" />
@@ -111,6 +115,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
         <audio
           key={song.instrumental_link}
           controls
+          autoPlay
           ref={audioRef}
           onEnded={handleAudioEnded}>
           <source src={song.instrumental_link} type="audio/mpeg" />

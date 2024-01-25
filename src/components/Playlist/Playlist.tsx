@@ -1,7 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { getCookie } from "typescript-cookie";
 import { ACCESS_USER_TOKEN_KEY } from "../../constants/auth";
+import Typography from "@mui/material/Typography";
 import { Song } from "../../models";
+import "./Playlist.scss"
 
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -28,9 +30,20 @@ const Playlist: FC<IPlaylistProps> = ({ groupId }) => {
   }, []);
 
   return (
-    <div>
+    <div className="playlist-div">
+      {
+        (playlist.length > 0) ? 
+                          <Typography gutterBottom variant="h5" component="h2" className="playlist-title">
+                            Next:
+                          </Typography>
+                          :
+                          <Typography gutterBottom variant="h5" component="h2" className="playlist-title">
+                            Add songs to playlist
+                          </Typography>
+
+      }
       {playlist.map((song) => (
-        <p key={song.id}>{song.name}</p>
+        <p key={song.id} className="playlist-song">{song.name}</p>
       ))}
     </div>
   );

@@ -6,7 +6,7 @@ interface ILyricsProps {
 
 const Lyrics: FC<ILyricsProps> = ({ text }) => {
   // State variable to manage the checkbox state
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
 
   // Function to handle checkbox changes
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ const Lyrics: FC<ILyricsProps> = ({ text }) => {
           checked={isChecked}
           onChange={handleCheckboxChange}
         />
-        {isChecked ? "Don't want to see lyrics" : "See lyrics?"}
+        See lyrics?
       </label>
     </div>
   );

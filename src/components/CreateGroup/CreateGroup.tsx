@@ -105,8 +105,13 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
               console.log(error);
             });
         })
-        .catch((error: unknown) => {
-          console.log(error);
+        .catch((error) => {
+          if(error.response.status === 400){
+            setIsGroupNameInvalid(true);
+          }
+          else{
+            console.log(error);
+          }
         });
     }
   };

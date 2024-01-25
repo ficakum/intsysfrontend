@@ -1,0 +1,15 @@
+.playlist-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.playlist-song{
+    color: rgb(42, 221, 71);
+}
+
+.playlist-title{
+    color: rgb(48, 235, 82);
+    font-weight: bold;
+}
