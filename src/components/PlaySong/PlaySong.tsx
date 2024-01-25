@@ -77,22 +77,27 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   };
 
   // State variable to manage the checkbox state
-  const [isChecked, setIsChecked] = useState(false);
+  const [isCheckedKaraoke, setIsCheckedKaraoke] = useState(false);
+  const [isCheckedLyrics, setIsCheckedLyrics] = useState(false);
 
   // Function to handle checkbox changes
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
+  const handleKaraokeCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedKaraoke(event.target.checked);
+  };
+
+  const handleLyricsCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedLyrics(event.target.checked);
   };
 
   return (
     <div className="curr-song-div">
       {song.instrumental_link && (
-        <label>
+        <label className="cb-label">
           {/* Use the state variable to set the default checked state */}
           <input
             type="checkbox"
-            checked={isChecked}
-            onChange={handleCheckboxChange}
+            checked={isCheckedKaraoke}
+            onChange={handleKaraokeCheckboxChange}
           />
           Play karaoke
         </label>
@@ -100,7 +105,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
-      {!isChecked && song.audio_link && (
+      {!isCheckedKaraoke && song.audio_link && (
         <audio 
           key={song.audio_link}
           controlsList="nodownload noplaybackrate"
@@ -111,7 +116,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
           <source src={song.audio_link} type="audio/mpeg" />
         </audio>
       )}
-      {isChecked && song.instrumental_link && (
+      {isCheckedKaraoke && song.instrumental_link && (
         <audio
           key={song.instrumental_link}
           controls
@@ -121,7 +126,17 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
           <source src={song.instrumental_link} type="audio/mpeg" />
         </audio>
       )}
-      {lyrics && lyrics.text && <Lyrics text={lyrics.text} />}
+      {song.instrumental_link && 
+        <label className="cb-label">
+          {/* Use the state variable to set the default checked state */}
+          <input
+            type="checkbox"
+            checked={isCheckedLyrics}
+            onChange={handleLyricsCheckboxChange}
+          />
+          See lyrics?
+        </label>}
+      {lyrics && lyrics.text && isCheckedLyrics && <Lyrics text={lyrics.text} />}
     </div>
   );
 };

@@ -1,30 +1,14 @@
-import { ChangeEvent, FC, useState } from "react";
+import { FC } from "react";
+import "./Lyrics.scss"
 
 interface ILyricsProps {
   text: string;
 }
 
 const Lyrics: FC<ILyricsProps> = ({ text }) => {
-  // State variable to manage the checkbox state
-  const [isChecked, setIsChecked] = useState(false);
-
-  // Function to handle checkbox changes
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
-  };
-
   return (
     <div>
-      {isChecked && <p>{text}</p>}
-      <label>
-        {/* Use the state variable to set the default checked state */}
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
-        See lyrics?
-      </label>
+      <p className="lyrics">{text}</p>
     </div>
   );
 };
