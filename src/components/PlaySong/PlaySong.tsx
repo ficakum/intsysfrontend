@@ -119,6 +119,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
       {isCheckedKaraoke && song.instrumental_link && (
         <audio
           key={song.instrumental_link}
+          controlsList="nodownload noplaybackrate"
           controls
           autoPlay
           ref={audioRef}
