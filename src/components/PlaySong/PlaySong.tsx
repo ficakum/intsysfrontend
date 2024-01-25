@@ -125,7 +125,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
               checked={isCheckedKaraoke}
               onChange={handleKaraokeCheckboxChange}
             />
-            Play karaoke
+            Play karaoke?
           </label>
         )}
         {song.instrumental_link && 
