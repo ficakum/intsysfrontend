@@ -122,7 +122,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <div className="create-group-div">
             <TextField
-              sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+              sx={{ backgroundColor: "rgba(101, 18, 108, 0.8)" }}
               margin="normal"
               required
               autoFocus
@@ -135,13 +135,14 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
               onChange={handleGroupNameChange}
             />
             <TextField
-              sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+              sx={{ backgroundColor: "rgba(101, 18, 108, 0.8)" }}
               margin="normal"
               className="creategroup-maxmembers"
               ref={maxMembersInputRef}
               label="Max members"
               type="number"
               InputProps={{ inputProps: { min: 1 } }}
+              defaultValue={10}
               placeholder="Enter max members"
               error={isMaxMembersInvalid}
               onChange={handleMaxMembersChange}

@@ -32,18 +32,13 @@ const Playlist: FC<IPlaylistProps> = ({ groupId }) => {
   return (
     <div className="playlist-div">
       {
-        (playlist.length > 0) ? 
+        (playlist.length > 0) && 
                           <Typography gutterBottom variant="h5" component="h2" className="playlist-title">
                             Next:
                           </Typography>
-                          :
-                          <Typography gutterBottom variant="h5" component="h2" className="playlist-title">
-                            Add songs to playlist
-                          </Typography>
-
       }
       {playlist.map((song) => (
-        <p key={song.id} className="playlist-song">{song.name}</p>
+        <p key={song.id} className="playlist-song">{song.name} (Artist name)</p>
       ))}
     </div>
   );

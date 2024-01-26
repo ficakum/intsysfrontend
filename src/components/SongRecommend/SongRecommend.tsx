@@ -16,7 +16,7 @@ interface ISongRecommendProps {
 const Song: FC<ISongRecommendProps> = ({ song, onAdd }) => {
   return (
     <Grid item xs={4}> 
-        <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <Card sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "rgb(59, 94, 21, 0.4)"}}>
           <CardMedia
               component="div"
               sx={{
@@ -25,7 +25,7 @@ const Song: FC<ISongRecommendProps> = ({ song, onAdd }) => {
               }}
               image="https://dl.dropbox.com/scl/fi/nzfcowp3t3y2a5hu71il1/cover_img.jpg?rlkey=3tsa8iqzcr2pzmhctu1gg317i&dl=0"
           />
-          <CardContent sx={{ flexGrow: 1 }}>
+          <CardContent sx={{ flexGrow: 1, color: "white"}}>
             <Typography gutterBottom variant="h5" component="h2">
               {song.name}
             </Typography>

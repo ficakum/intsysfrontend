@@ -135,21 +135,23 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <div className="song-search-div">
               <TextField
-                sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+                sx={{ backgroundColor: "rgba(36, 102, 226, 0.6)" }}
                 margin="normal"
                 className="song-name"
                 ref={searchNameInputRef}
                 type="text"
                 placeholder="Enter song name"
+                label="Song name"
                 onChange={handleSearchNameChange}
               />
               <TextField
-                sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+                sx={{ backgroundColor: "rgba(36, 102, 226, 0.6)" }}
                 margin="normal"
                 className="song-author"
                 ref={searchAuthorInputRef}
                 type="text"
-                placeholder="Enter author"
+                placeholder="Enter artist"
+                label="Artist"
                 onChange={handleSearchAuthorChange}
               />
               <Button className="search-song-btn" onClick={() => onSearch()}>
@@ -172,7 +174,6 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
         </ThemeProvider>
       </div>
       <Pagination
-        className="pagination"
         count={totalPages}
         page={currentPage}
         onChange={handlePageChange}

@@ -112,11 +112,12 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <div className="group-search-div">
               <TextField
-                sx={{ backgroundColor: "rgba(101, 18, 108, 0.93)" }}
+                sx={{ backgroundColor: "rgba(36, 102, 226, 0.8)" }}
                 margin="normal"
                 className="group-name"
                 ref={searchNameInputRef}
                 type="text"
+                label="Group name"
                 placeholder="Enter group name"
                 onChange={handleSearchNameChange}
               />
@@ -140,7 +141,6 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
         </ThemeProvider>
       </div>
       <Pagination
-        className="pagination"
         count={totalPages}
         page={currentPage}
         onChange={handlePageChange}

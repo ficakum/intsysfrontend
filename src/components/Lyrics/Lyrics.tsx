@@ -7,9 +7,7 @@ interface ILyricsProps {
 
 const Lyrics: FC<ILyricsProps> = ({ text }) => {
   return (
-    <div>
       <p className="lyrics">{text}</p>
-    </div>
   );
 };
 

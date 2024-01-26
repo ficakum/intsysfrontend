@@ -76,11 +76,9 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     setSong(initialSongEvent);
   };
 
-  // State variable to manage the checkbox state
   const [isCheckedKaraoke, setIsCheckedKaraoke] = useState(false);
   const [isCheckedLyrics, setIsCheckedLyrics] = useState(false);
 
-  // Function to handle checkbox changes
   const handleKaraokeCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIsCheckedKaraoke(event.target.checked);
   };
@@ -91,6 +89,11 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
 
   return (
     <div className="curr-song-div">
+      {song.album_cover_link && (
+        <label className="cb-label">
+          Playing: {song.name}
+        </label>
+      )}
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
@@ -119,7 +122,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
       <div className="check-btns">
         {song.instrumental_link && (
           <label className="cb-label">
-            {/* Use the state variable to set the default checked state */}
             <input
               type="checkbox"
               checked={isCheckedKaraoke}
@@ -130,7 +132,6 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
         )}
         {song.instrumental_link && 
           <label className="cb-label">
-            {/* Use the state variable to set the default checked state */}
             <input
               type="checkbox"
               checked={isCheckedLyrics}
@@ -139,7 +140,10 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
             See lyrics?
         </label>}
       </div>
-      {lyrics && lyrics.text && isCheckedLyrics && <Lyrics text={lyrics.text} />}
+      { isCheckedLyrics &&
+      <div className="lyrics-div">
+        {lyrics && lyrics.text && <Lyrics text={lyrics.text} />}
+      </div>}
     </div>
   );
 };

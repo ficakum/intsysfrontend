@@ -35,8 +35,8 @@ const GroupBackend: FC<IGroupProps> = ({ group, setUser }) => {
 
   return (
     <Grid item xs={4}>
-      <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-        <CardContent sx={{ flexGrow: 1 }}>
+      <Card sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "rgb(242, 70, 82, 0.4)"}}>
+        <CardContent sx={{ flexGrow: 1, color: "white"}}>
           <Typography gutterBottom variant="h5" component="h2">
             {group.groupName}
           </Typography>
@@ -45,7 +45,7 @@ const GroupBackend: FC<IGroupProps> = ({ group, setUser }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="large" onClick={onJoinGroup} className="join-group-btn">
+          <Button size="large" onClick={onJoinGroup} className="join-back-group-btn">
             Join group
           </Button>
         </CardActions>

@@ -35,8 +35,8 @@ const Group: FC<IGroupProps> = ({ group, setUser }) => {
 
   return (
     <Grid item xs={4}>
-      <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-        <CardContent sx={{ flexGrow: 1 }}>
+      <Card sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "rgb(59, 94, 21, 0.4)"}}>
+        <CardContent sx={{ flexGrow: 1, color: "white" }}>
           <Typography gutterBottom variant="h5" component="h2">
             {group.groupName}
           </Typography>
