@@ -112,7 +112,7 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <div className="group-search-div">
               <TextField
-                sx={{ backgroundColor: "rgba(36, 102, 226, 0.8)" }}
+                sx={{ backgroundColor: "rgba(36, 102, 226, 0.6)" }}
                 margin="normal"
                 className="group-name"
                 ref={searchNameInputRef}
@@ -128,7 +128,6 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
           </Box>
         </Container>
       </ThemeProvider>
-      <div className="all-groups-div">
         <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
           <Container sx={{ py: 6 }} maxWidth="md">
@@ -139,7 +138,6 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
             </Grid>
           </Container>
         </ThemeProvider>
-      </div>
       <Pagination
         count={totalPages}
         page={currentPage}

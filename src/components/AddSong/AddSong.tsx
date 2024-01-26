@@ -161,7 +161,6 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
           </Box>
         </Container>
       </ThemeProvider>
-      <div className="all-songs-div">
         <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
           <Container sx={{ py: 6 }} maxWidth="md">
@@ -172,7 +171,6 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
             </Grid>
           </Container>
         </ThemeProvider>
-      </div>
       <Pagination
         count={totalPages}
         page={currentPage}
