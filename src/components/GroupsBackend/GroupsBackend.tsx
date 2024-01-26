@@ -95,6 +95,8 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
           totalPages: number;
         }) => {
           setGroups(response.items);
+          setCurrentPage(response.currentPage);
+          setTotalPages(response.totalPages);
         }
       )
       .catch((error: unknown) => {

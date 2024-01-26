@@ -99,8 +99,15 @@ const AddSong: FC<IAddSongProps> = ({ groupId, setRecommendations }) => {
 
   const onSearch = () => {
     getTrackInfos(1, 9, searchName, searchAuthor)
-      .then((response: ISong[]) => {
-        setSongs(response);
+      .then(
+        (response: {
+          items: ISong[];
+          currentPage: number;
+          totalPages: number;
+        }) => {
+          setSongs(response.items);
+          setCurrentPage(response.currentPage);
+          setTotalPages(response.totalPages);
       })
       .catch((error: unknown) => {
         console.log(error);

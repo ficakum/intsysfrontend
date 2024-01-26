@@ -44,7 +44,8 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
         audioRef.current.currentTime = eventData.timeOffset / 1000;
       }
 
-      getLyrics(JSON.parse(e.data).infoId)
+      if (eventData.instrumental_link){
+        getLyrics(JSON.parse(e.data).infoId)
         .then((response: { segments: [] }) => {
           const lyrics: ILyrics | null = response.segments.length
             ? response.segments.filter(
@@ -65,6 +66,11 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
           );
         })
         .catch((error) => console.log(error));
+      }
+      else{
+        setLyrics(null);
+      }
+      
     });
 
     return () => {

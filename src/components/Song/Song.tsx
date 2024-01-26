@@ -16,7 +16,7 @@ interface ISongProps {
 const Song: FC<ISongProps> = ({ song, onAdd }) => {
   return (
     <Grid item xs={4}> 
-      <Card sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "rgb(242, 70, 82, 0.4)"}}>
+      <Card sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "rgb(217, 93, 44, 0.4)"}}>
         <CardMedia
             component="div"
             sx={{
