@@ -36,6 +36,7 @@ export const initialUser = {
 export interface Song {
   id: string;
   name: string;
+  author: string;
 }
 
 export interface IRecommendedSong {
@@ -43,6 +44,7 @@ export interface IRecommendedSong {
   name: string;
   author: string;
   genre: string;
+  album_cover_link: string;
 }
 
 export interface ISong {
@@ -50,6 +52,7 @@ export interface ISong {
   name: string;
   author: string;
   genre: string;
+  album_cover_link: string;
 }
 
 export interface ISongEvent {

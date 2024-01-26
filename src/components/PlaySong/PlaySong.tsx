@@ -16,6 +16,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [song, setSong] = useState<ISongEvent>(initialSongEvent);
   const [lyrics, setLyrics] = useState<ILyrics | null>(null);
+  // const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const accessUserToken = getCookie(ACCESS_USER_TOKEN_KEY);
@@ -44,39 +45,51 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
         audioRef.current.currentTime = eventData.timeOffset / 1000;
       }
 
-      if (eventData.instrumental_link){
+      if (eventData.instrumental_link) {
         getLyrics(JSON.parse(e.data).infoId)
-        .then((response: { segments: [] }) => {
-          const lyrics: ILyrics | null = response.segments.length
-            ? response.segments.filter(
-                (segment: ILyrics) =>
-                  segment.start < JSON.parse(e.data).timeOffset / 1000 &&
-                  segment.end > JSON.parse(e.data).timeOffset / 1000
-              )[0]
-            : null;
-          setLyrics(
-            lyrics
-              ? {
-                  id: (lyrics as ILyrics).id,
-                  text: (lyrics as ILyrics).text,
-                  start: (lyrics as ILyrics).start,
-                  end: (lyrics as ILyrics).end,
-                }
-              : null
-          );
-        })
-        .catch((error) => console.log(error));
-      }
-      else{
+          .then((response: { segments: [] }) => {
+            const lyrics: ILyrics | null = response.segments.length
+              ? response.segments.filter(
+                  (segment: ILyrics) =>
+                    segment.start < JSON.parse(e.data).timeOffset / 1000 &&
+                    segment.end > JSON.parse(e.data).timeOffset / 1000
+                )[0]
+              : null;
+            setLyrics(
+              lyrics
+                ? {
+                    id: (lyrics as ILyrics).id,
+                    text: (lyrics as ILyrics).text,
+                    start: (lyrics as ILyrics).start,
+                    end: (lyrics as ILyrics).end,
+                  }
+                : null
+            );
+          })
+          .catch((error) => console.log(error));
+      } else {
         setLyrics(null);
       }
-      
     });
 
     return () => {
       eventSource.close();
     };
   }, []);
+
+  // useEffect(() => {
+  //   if (audioRef.current) {
+  //     if (isPlaying) {
+  //       audioRef.current.play();
+  //     } else {
+  //       audioRef.current.pause();
+  //     }
+  //   }
+  // }, [isPlaying]);
+
+  // const togglePlay = () => {
+  //   setIsPlaying(!isPlaying);
+  // };
 
   const handleAudioEnded = () => {
     setSong(initialSongEvent);
@@ -85,7 +98,9 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
   const [isCheckedKaraoke, setIsCheckedKaraoke] = useState(false);
   const [isCheckedLyrics, setIsCheckedLyrics] = useState(false);
 
-  const handleKaraokeCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleKaraokeCheckboxChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     setIsCheckedKaraoke(event.target.checked);
   };
 
@@ -93,37 +108,39 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
     setIsCheckedLyrics(event.target.checked);
   };
 
-  return (
+  return song.id ? (
     <div className="curr-song-div">
       {song.album_cover_link && (
-        <label className="cb-label">
-          Playing: {song.name}
-        </label>
+        <label className="cb-label">Playing: {song.name}</label>
       )}
       {song.album_cover_link && (
         <img className="curr-song-img" src={song.album_cover_link} />
       )}
       {!isCheckedKaraoke && song.audio_link && (
-        <audio 
-          key={song.audio_link}
-          controlsList="nodownload noplaybackrate"
-          controls
-          autoPlay
-          ref={audioRef}
-          onEnded={handleAudioEnded}>
-          <source src={song.audio_link} type="audio/mpeg" />
-        </audio>
+        <div>
+          <audio
+            key={song.audio_link}
+            controlsList="nodownload noplaybackrate"
+            controls
+            autoPlay
+            ref={audioRef}
+            onEnded={handleAudioEnded}>
+            <source src={song.audio_link} type="audio/mpeg" />
+          </audio>
+        </div>
       )}
       {isCheckedKaraoke && song.instrumental_link && (
-        <audio
-          key={song.instrumental_link}
-          controlsList="nodownload noplaybackrate"
-          controls
-          autoPlay
-          ref={audioRef}
-          onEnded={handleAudioEnded}>
-          <source src={song.instrumental_link} type="audio/mpeg" />
-        </audio>
+        <div>
+          <audio
+            key={song.instrumental_link}
+            controlsList="nodownload noplaybackrate"
+            autoPlay
+            controls
+            ref={audioRef}
+            onEnded={handleAudioEnded}>
+            <source src={song.instrumental_link} type="audio/mpeg" />
+          </audio>
+        </div>
       )}
       <div className="check-btns">
         {song.instrumental_link && (
@@ -136,7 +153,7 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
             Play karaoke?
           </label>
         )}
-        {song.instrumental_link && 
+        {song.instrumental_link && (
           <label className="cb-label">
             <input
               type="checkbox"
@@ -144,13 +161,17 @@ const PlaySong: FC<IPlaySongProps> = ({ groupId }) => {
               onChange={handleLyricsCheckboxChange}
             />
             See lyrics?
-        </label>}
+          </label>
+        )}
       </div>
-      { isCheckedLyrics &&
-      <div className="lyrics-div">
-        {lyrics && lyrics.text && <Lyrics text={lyrics.text} />}
-      </div>}
+      {isCheckedLyrics && (
+        <div className="lyrics-div">
+          {lyrics && lyrics.text && <Lyrics text={lyrics.text} />}
+        </div>
+      )}
     </div>
+  ) : (
+    <div></div>
   );
 };
 
