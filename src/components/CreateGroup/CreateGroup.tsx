@@ -89,8 +89,13 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
               console.log(error);
             });
         })
-        .catch((error: unknown) => {
-          console.log(error);
+        .catch((error) => {
+          if(error.response.status === 400 || error.response.status === 500 ){
+            setIsGroupNameInvalid(true);
+          }
+          else{
+            console.log(error);
+          }
         });
     } else {
       createGroup({ groupName, membersNum: 1 })
@@ -106,7 +111,7 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
             });
         })
         .catch((error) => {
-          if(error.response.status === 400){
+          if(error.response.status === 400 || error.response.status === 500 ){
             setIsGroupNameInvalid(true);
           }
           else{
