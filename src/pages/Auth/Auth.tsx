@@ -14,7 +14,7 @@ const Auth = () => {
       {haveAccount ? <SignIn /> : <SignUp />}
       <Button className = "btn-have-acc" onClick={() => setHaveAccount(!haveAccount)}>
         {haveAccount
-          ? "Don't have account? Signup"
+          ? "Don't have account? Sign up"
           : "ALready have account? Sign in"}
       </Button>
     </div>
