@@ -10,7 +10,7 @@ import { Button, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { IUser } from "../../models";
+import { IUser, IGroup } from "../../models";
 import { createGroup } from "../../services/Group";
 import { getLoggedInUser } from "../../services/Auth";
 import "./CreateGroup.scss";
@@ -29,9 +29,10 @@ const theme = createTheme({
 
 interface ICreateGroupProps {
   setUser: Dispatch<SetStateAction<IUser>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }
 
-const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
+const CreateGroup: FC<ICreateGroupProps> = ({ setUser, setGroup }) => {
   const groupNameInputRef = useRef<HTMLInputElement | null>(null);
   const maxMembersInputRef = useRef<HTMLInputElement | null>(null);
   const [groupName, setGroupName] = useState<string>("");
@@ -78,7 +79,8 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
 
     if (maxMembers) {
       createGroup({ groupName, maxMembers, membersNum: 1 })
-        .then(() => {
+        .then((group: IGroup) => {
+          setGroup(group.groupName);
           getLoggedInUser()
             .then((user: IUser) => {
               setUser(user);
@@ -99,7 +101,8 @@ const CreateGroup: FC<ICreateGroupProps> = ({ setUser }) => {
         });
     } else {
       createGroup({ groupName, membersNum: 1 })
-        .then(() => {
+        .then((group: IGroup) => {
+          setGroup(group.groupName);
           getLoggedInUser()
             .then((user: IUser) => {
               setUser(user);

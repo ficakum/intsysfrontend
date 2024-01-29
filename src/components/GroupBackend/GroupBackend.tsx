@@ -13,12 +13,14 @@ import "./GroupBackend.scss";
 interface IGroupProps {
   group: IGroupBackend;
   setUser: Dispatch<SetStateAction<IUser>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }
 
-const GroupBackend: FC<IGroupProps> = ({ group, setUser }) => {
+const GroupBackend: FC<IGroupProps> = ({ group, setUser, setGroup}) => {
   const onJoinGroup = () => {
     joinGroup(group._id)
       .then(() => {
+        setGroup(group.groupName);
         getLoggedInUser()
           .then((user: IUser) => {
             setUser(user);

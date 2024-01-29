@@ -8,15 +8,17 @@ import "./LeaveGroup.scss"
 interface ILeaveGroupProps {
   groupId: string;
   setUser: Dispatch<SetStateAction<IUser>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }
 
-const LeaveGroup: FC<ILeaveGroupProps> = ({ groupId, setUser }) => {
+const LeaveGroup: FC<ILeaveGroupProps> = ({ groupId, setUser, setGroup }) => {
   const onLeaveGroup = () => {
     leaveGroup(groupId)
       .then(() => {
         getLoggedInUser()
           .then((user: IUser) => {
             setUser(user);
+            setGroup("");
 
             return;
           })

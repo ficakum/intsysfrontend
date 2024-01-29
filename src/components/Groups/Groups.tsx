@@ -15,8 +15,9 @@ const defaultTheme = createTheme();
 interface IGroupsProps {
   userId: string;
   setUser: Dispatch<SetStateAction<IUser>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }
-const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
+const Groups: FC<IGroupsProps> = ({ userId, setUser, setGroup }) => {
   const [groups, setGroups] = useState<Array<IGroup>>([]);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const Groups: FC<IGroupsProps> = ({ userId, setUser }) => {
         <Container sx={{ py: 6 }} maxWidth="md">
           <Grid container spacing={4}>
             {groups.map((group, key) => (
-              <Group key={key} group={group} setUser={setUser} />
+              <Group key={key} group={group} setUser={setUser} setGroup={setGroup}/>
             ))}
           </Grid>
         </Container>

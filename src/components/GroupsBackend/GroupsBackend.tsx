@@ -35,8 +35,9 @@ const searchTheme = createTheme({
 
 interface IGroupsProps {
   setUser: Dispatch<SetStateAction<IUser>>;
+  setGroup: Dispatch<SetStateAction<string>>;
 }
-const Groups: FC<IGroupsProps> = ({ setUser }) => {
+const Groups: FC<IGroupsProps> = ({ setUser, setGroup}) => {
   const searchNameInputRef = useRef<HTMLInputElement | null>(null);
   const [groups, setGroups] = useState<Array<IGroupBackend>>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -135,7 +136,7 @@ const Groups: FC<IGroupsProps> = ({ setUser }) => {
           <Container sx={{ py: 6 }} maxWidth="md">
             <Grid container spacing={4}>
               {groups.map((group, key) => (
-                <GroupBackend key={key} group={group} setUser={setUser} />
+                <GroupBackend key={key} group={group} setUser={setUser} setGroup={setGroup}/>
               ))}
             </Grid>
           </Container>

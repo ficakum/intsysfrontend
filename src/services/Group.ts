@@ -28,6 +28,11 @@ export const getGroups = async (
   return response.data;
 };
 
+export const getGroup = async (groupId: string) => {
+  const response = await Api.get(`${getGroupsUrl}${groupId}`);
+  return response.data;
+};
+
 export const getGroupsRecommendation = async (userId: string) => {
   const response = await Api.get(`${getGroupsRecommendationUrl}${userId}`);
   return response.data;

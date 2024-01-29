@@ -6,7 +6,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,22 +15,14 @@ import "./Header.scss"
 
 interface IHeaderProps {
   showMenu: string;
+  group: string;
 }
 
-const Header: FC<IHeaderProps> = ({ showMenu }) => {
-
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+const Header: FC<IHeaderProps> = ({ showMenu, group }) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -42,37 +33,6 @@ const Header: FC<IHeaderProps> = ({ showMenu }) => {
     <AppBar position="static" sx={{ backgroundColor: "rgba(27, 4, 110, 0.95)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-            </Menu>
-          </Box>
           <a href="Home"><img src="logo.png" alt="AUDITORIUM logo" id="logo"/></a>
           <Typography
             variant="h5"
@@ -93,9 +53,13 @@ const Header: FC<IHeaderProps> = ({ showMenu }) => {
             AUDITORIUM
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {group.length > 0 ? 
+              <div style = {{textAlign: "center", width: "84%"}}>
+                <label >{group}</label>
+              </div>:<></>}
           </Box>
           {
-            showMenu === "true" ?  
+          showMenu === "true" ?  
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt="Remy Sharp" />
